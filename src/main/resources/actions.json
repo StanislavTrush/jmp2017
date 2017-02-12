@@ -1,0 +1,40 @@
+[
+  {
+    "name":"action1",
+    "type":"PRINT",
+    "conditions":[
+      {
+        "attribute": "color",
+        "value": "Black",
+        "operation": "EQUALS"
+      }
+    ]
+  },
+  {
+    "name":"action2",
+    "type":"PRINT_UPPER",
+    "conditions":[
+      {
+        "attribute": "name",
+        "value": "Doge",
+        "operation": "EQUALS"
+      },
+      {
+        "attribute": "color",
+        "value": "3",
+        "operation": "MIN_LENGTH"
+      }
+    ]
+  },
+  {
+    "name":"action3",
+    "type":"PRINT",
+    "conditions":[
+      {
+        "attribute": "brand",
+        "value": "LG",
+        "operation": "EQUALS"
+      }
+    ]
+  }
+]

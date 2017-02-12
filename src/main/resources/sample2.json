@@ -1,0 +1,26 @@
+[
+  {
+    "dog": {
+      "name":"John",
+      "color":"Black"
+    }
+  },
+  {
+    "fridge":{
+      "brand":"LG",
+      "weight":"40"
+    }
+  },
+  {
+    "fridge":{
+      "brand":"A4 Tech",
+      "weight":"5"
+    }
+  },
+  {
+    "dog": {
+      "name":"Doge",
+      "color":"Brown"
+    }
+  }
+]

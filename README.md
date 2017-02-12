@@ -2,7 +2,7 @@
 
 **List of modules:**
 
-1. Architecture: Principle of software development
+1. **_Architecture: Principle of software development_**
 2. Backend: Class loading
 3. Architecture: Creational Patterns
 4. Architecture: Structural Patterns
