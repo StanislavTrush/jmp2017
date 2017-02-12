@@ -1,11 +1,9 @@
 package com.epam.jmp2017.model.enums;
 
-import com.epam.jmp2017.constants.BaseConstants;
-
 public enum Attribute {
-    NAME(BaseConstants.NAME),
-    COLOR(BaseConstants.COLOR),
-    BRAND(BaseConstants.BRAND);
+    NAME("name"),
+    COLOR("color"),
+    BRAND("brand");
 
     private String name;
 

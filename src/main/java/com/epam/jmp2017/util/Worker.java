@@ -20,13 +20,14 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Worker {
-    public String performActions(String dataString) throws IOException {
-        List<Result> results = new ArrayList<>();
-        List<Data> dataList = new ArrayList<>();
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL actionsUrl = classLoader.getResource(BaseConstants.FILE_ACTIONS);
-        Gson gson = new Gson();
+    public String getTaskResult(String dataString) throws IOException {
         JsonParser parser = new JsonParser();
+        List<Data> dataList = parseData(dataString, parser);
+        return getActionsResults(dataList, parser);
+    }
+
+    private List<Data> parseData(String dataString, JsonParser parser) {
+        List<Data> dataList = new ArrayList<>();
         JsonReader reader = new JsonReader(new StringReader(dataString));
         reader.setLenient(true);
         if(!dataString.isEmpty()) {
@@ -49,7 +50,14 @@ public class Worker {
                 }
             }
         }
+        return dataList;
+    }
 
+    private String getActionsResults(List<Data> dataList, JsonParser parser) throws IOException {
+        Gson gson = new Gson();
+        List<Result> results = new ArrayList<>();
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL actionsUrl = classLoader.getResource(BaseConstants.FILE_ACTIONS);
         if(actionsUrl != null) {
             File file = new File(actionsUrl.getFile());
             JsonArray jsonActions = (JsonArray) parser.parse(new FileReader(file));

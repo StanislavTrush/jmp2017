@@ -1,10 +1,8 @@
 package com.epam.jmp2017.model.enums;
 
-import com.epam.jmp2017.constants.BaseConstants;
-
 public enum Operation {
-    EQUALS(BaseConstants.EQUALS),
-    MIN_LENGTH(BaseConstants.MIN_LENGTH);
+    EQUALS("EQUALS"),
+    MIN_LENGTH("MIN_LENGTH");
 
     private String name;
 

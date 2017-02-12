@@ -1,10 +1,8 @@
 package com.epam.jmp2017.model.enums;
 
-import com.epam.jmp2017.constants.BaseConstants;
-
 public enum ActionType {
-    PRINT(BaseConstants.PRINT),
-    PRINT_UPPER(BaseConstants.PRINT_UPPER);
+    PRINT("PRINT"),
+    PRINT_UPPER("PRINT_UPPER");
 
     private String name;
 
