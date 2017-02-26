@@ -1,9 +1,9 @@
-package com.epam.jmp2017.model;
+package com.epam.jmp2017.model.json;
 
-public class Condition {
+public class ConditionModel {
     private String attribute;
     private String value;
-    private String operation;
+    private String className;
 
     public String getAttribute() {
         return attribute;
@@ -17,16 +17,16 @@ public class Condition {
     public void setValue(String value) {
         this.value = value;
     }
-    public String getOperation() {
-        return operation;
+    public String getClassName() {
+        return className;
     }
-    public void setOperation(String operation) {
-        this.operation = operation;
+    public void setClassName(String className) {
+        this.className = className;
     }
 
-    public Condition(String attribute, String value, String operation) {
+    public ConditionModel(String attribute, String value, String className) {
         this.attribute = attribute;
         this.value = value;
-        this.operation = operation;
+        this.className = className;
     }
 }

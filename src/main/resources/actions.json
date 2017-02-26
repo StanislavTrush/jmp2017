@@ -6,7 +6,7 @@
       {
         "attribute": "color",
         "value": "Black",
-        "operation": "EQUALS"
+        "className": "com.epam.jmp2017.model.conditions.impl.EqualsCondition"
       }
     ]
   },
@@ -17,12 +17,12 @@
       {
         "attribute": "name",
         "value": "Doge",
-        "operation": "EQUALS"
+        "className": "com.epam.jmp2017.model.conditions.impl.EqualsCondition"
       },
       {
         "attribute": "color",
         "value": "3",
-        "operation": "MIN_LENGTH"
+        "className": "com.epam.jmp2017.model.conditions.impl.LengthCondition"
       }
     ]
   },
@@ -33,7 +33,7 @@
       {
         "attribute": "brand",
         "value": "LG",
-        "operation": "EQUALS"
+        "className": "com.epam.jmp2017.model.conditions.impl.EqualsCondition"
       }
     ]
   }

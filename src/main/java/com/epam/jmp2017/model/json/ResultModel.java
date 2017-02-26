@@ -1,6 +1,6 @@
-package com.epam.jmp2017.model;
+package com.epam.jmp2017.model.json;
 
-public class Result {
+public class ResultModel {
     private int typeCode;
     private String result;
 
@@ -17,7 +17,7 @@ public class Result {
         this.result = result;
     }
 
-    public Result(int typeCode, String result) {
+    public ResultModel(int typeCode, String result) {
         this.typeCode = typeCode;
         this.result = result;
     }

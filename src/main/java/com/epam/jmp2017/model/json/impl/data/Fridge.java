@@ -1,9 +1,9 @@
-package com.epam.jmp2017.model.impl.data;
+package com.epam.jmp2017.model.json.impl.data;
 
-import com.epam.jmp2017.model.Data;
+import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.model.enums.Attribute;
 
-public class Fridge implements Data {
+public class Fridge implements DataModel {
     private int weight;
     private String brand;
 
