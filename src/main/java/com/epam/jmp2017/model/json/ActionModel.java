@@ -1,11 +1,11 @@
 package com.epam.jmp2017.model.json;
 
+import java.util.List;
+
 import com.epam.jmp2017.model.conditions.Condition;
 import com.epam.jmp2017.model.enums.ActionType;
 import com.epam.jmp2017.model.enums.Attribute;
 import com.epam.jmp2017.util.Worker;
-
-import java.util.List;
 
 public class ActionModel {
     private String name;

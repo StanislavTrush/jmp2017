@@ -1,6 +1,7 @@
 package com.epam.jmp2017.controller;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,6 +33,7 @@ public class MainController extends HttpServlet
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType(WebConstants.TYPE_CONTENT);
 		Worker worker = new Worker();
+		worker.cacheConditions();
 		PrintWriter out = response.getWriter();
 		out.print(worker.getTaskResult(request.getParameter(BaseConstants.ATTR_DATA)));
 	}

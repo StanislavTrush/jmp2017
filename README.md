@@ -3,7 +3,7 @@
 **List of modules:**
 
 1. **_Architecture: Principle of software development_**
-2. Backend: Class loading
+2. **_Backend: Class loading_**
 3. Architecture: Creational Patterns
 4. Architecture: Structural Patterns
 5. Backend: Spring Core Basics

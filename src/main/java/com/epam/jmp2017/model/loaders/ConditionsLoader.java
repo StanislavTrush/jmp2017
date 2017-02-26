@@ -1,16 +1,21 @@
 package com.epam.jmp2017.model.loaders;
 
-import com.epam.jmp2017.util.FileWorker;
+import com.epam.jmp2017.constants.BaseConstants;
+import com.epam.jmp2017.util.Worker;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ConditionsLoader extends ClassLoader {
     private String path;
-    private List<Class<?>> loadedClasses = new ArrayList<>();
+    private static List<Class<?>> loadedClasses = new ArrayList<>();
 
     public ConditionsLoader(String path, ClassLoader parent) {
         super(parent);
@@ -24,15 +29,19 @@ public class ConditionsLoader extends ClassLoader {
             if (result == null) {
                 result = super.loadClass(className);
                 if (result == null) {
-                    FileWorker fileWorker = new FileWorker();
-                    if (!className.contains("com.epam.jmp2017.model.conditions.impl")) {
-                        return fileWorker.getClass().getClassLoader().loadClass(className);
+                    Worker worker = new Worker();
+                    if (!className.contains(BaseConstants.PACKAGE_NAME)) {
+                        return worker.getClass().getClassLoader().loadClass(className);
                     }
-                    URL actionsUrl = fileWorker.getClass().getClassLoader().getResource(path + className.replace('.', '/') + ".class");
-                    if (actionsUrl != null) {
-                        byte b[] = fileWorker.fetchClassFromFS(actionsUrl.getFile());
+                    URL actionsUrl = new File(path + className.replace('.', '/') + ".class").toURI().toURL();
+                    Path path;
+                    try {
+                        path = Paths.get(actionsUrl.toURI());
+                        byte b[] = Files.readAllBytes(path);
                         result = defineClass(className, b, 0, b.length);
                         loadedClasses.add(result);
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
                     }
                 }
             }

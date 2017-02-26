@@ -10,8 +10,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.epam.jmp2017.constants.BaseConstants;
+import com.epam.jmp2017.model.annotations.ConditionDisplayName;
+import com.epam.jmp2017.model.conditions.Condition;
 import com.epam.jmp2017.model.json.ActionModel;
-import com.epam.jmp2017.model.json.ConditionModel;
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.model.json.ResultModel;
 import com.epam.jmp2017.model.loaders.ConditionsLoader;
@@ -22,13 +23,12 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 public class Worker {
-    private ConditionsLoader loader = new ConditionsLoader("classes/", ClassLoader.getSystemClassLoader());
+    private ConditionsLoader loader = new ConditionsLoader(BaseConstants.PATH_CONDITIONS, ClassLoader.getSystemClassLoader());
 
     public String getTaskResult(String dataString) throws IOException {
         JsonParser parser = new JsonParser();
         List<DataModel> dataList = parseData(dataString, parser);
         List<ActionModel> actions = parseActions(parser);
-        cacheConditions(actions);
         return getActionsResults(dataList, actions);
     }
 
@@ -108,11 +108,14 @@ public class Worker {
         return null;
     }
 
-    public void cacheConditions(List<ActionModel> actions) {
-        for (ActionModel action : actions) {
-            for (ConditionModel condition : action.getConditions()) {
-                loadCondition(condition.getClassName());
+    public void cacheConditions() {
+        File dir = new File(BaseConstants.PATH_CONDITIONS + BaseConstants.PACKAGE_NAME.replace(".", "/") + "/");
+        try {
+            for (File file : dir.listFiles()) {
+                loadCondition(BaseConstants.PACKAGE_NAME + "." + file.getName().replace(".class", ""));
             }
+        } catch (NullPointerException e) {
+            System.out.println("Exception during reading Conditions class files");
         }
     }
 
@@ -120,6 +123,11 @@ public class Worker {
         Class<?> result = null;
         try {
             result = loader.loadClass(className);
+            if (result != null &&
+                    (!Condition.class.isAssignableFrom(result) || !result.isAnnotationPresent(ConditionDisplayName.class))) {
+                result = null;
+            }
+
         } catch (ClassNotFoundException e) {
             System.out.println("Class " + className + " not found.");
         }
