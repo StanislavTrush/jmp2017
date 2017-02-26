@@ -1,10 +1,10 @@
-package com.epam.jmp2017.model.impl.data;
+package com.epam.jmp2017.model.json.impl.data;
 
-import com.epam.jmp2017.model.Data;
 import com.epam.jmp2017.model.enums.Attribute;
+import com.epam.jmp2017.model.json.DataModel;
 
 
-public class Dog implements Data {
+public class Dog implements DataModel {
     private String name;
     private String color;
 

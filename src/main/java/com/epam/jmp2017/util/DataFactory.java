@@ -1,18 +1,18 @@
 package com.epam.jmp2017.util;
 
-import com.epam.jmp2017.model.Data;
-import com.epam.jmp2017.model.impl.data.Dog;
-import com.epam.jmp2017.model.impl.data.Fridge;
+import com.epam.jmp2017.model.json.DataModel;
+import com.epam.jmp2017.model.json.impl.data.Dog;
+import com.epam.jmp2017.model.json.impl.data.Fridge;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 //Solid
 public class DataFactory {
-    public static Data getData(JsonElement element) {
+    public static DataModel getData(JsonElement element) {
         JsonObject object = element.getAsJsonObject();
         //soLid
-        Data result = getDog(object);
+        DataModel result = getDog(object);
         if(result != null) {
             return result;
         }
