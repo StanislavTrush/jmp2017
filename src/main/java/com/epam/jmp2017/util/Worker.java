@@ -23,7 +23,15 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 public class Worker {
-    private ConditionsLoader loader = new ConditionsLoader(BaseConstants.PATH_CONDITIONS, ClassLoader.getSystemClassLoader());
+    //[module-3] Singleton
+    private static volatile ConditionsLoader loader = null;
+
+    public static synchronized ConditionsLoader getConditionsLoader() {
+        if (loader == null) {
+            loader = new ConditionsLoader(BaseConstants.PATH_CONDITIONS, ClassLoader.getSystemClassLoader());
+        }
+        return loader;
+    }
 
     public String getTaskResult(String dataString) throws IOException {
         JsonParser parser = new JsonParser();
@@ -122,7 +130,7 @@ public class Worker {
     public Class<?> loadCondition(String className) {
         Class<?> result = null;
         try {
-            result = loader.loadClass(className);
+            result = getConditionsLoader().loadClass(className);
             if (result != null &&
                     (!Condition.class.isAssignableFrom(result) || !result.isAnnotationPresent(ConditionDisplayName.class))) {
                 result = null;

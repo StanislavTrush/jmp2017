@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 
 //Solid
 public class DataFactory {
+    //[module-3] Factory method
     public static DataModel getData(JsonElement element) {
         JsonObject object = element.getAsJsonObject();
         //soLid
