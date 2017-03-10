@@ -5,7 +5,7 @@
 1. **_Architecture: Principle of software development_**
 2. **_Backend: Class loading_**
 3. **_Architecture: Creational Patterns_**
-4. Architecture: Structural Patterns
+4. **_Architecture: Structural Patterns_**
 5. Backend: Spring Core Basics
 6. Infrastructure: JDBC  Advanced Techniques (+ Spring JDBC)
 7. Infrastructure: Continuous Integration Concepts (Jenkins)

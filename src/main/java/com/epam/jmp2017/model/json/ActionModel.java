@@ -16,6 +16,9 @@ public class ActionModel {
     private String type;
     private List<ConditionModel> conditions;
 
+    public ActionModel() {
+    }
+
     public ActionModel(String name, String type, List<ConditionModel> conditions) {
         this.name = name;
         this.type = type;
@@ -46,7 +49,7 @@ public class ActionModel {
         this.conditions = conditions;
     }
 
-    private boolean check(DataModel data) {
+    public boolean check(DataModel data) {
         Attribute attribute;
         String attributeRealValue;
         String attributeExpectedValue;
