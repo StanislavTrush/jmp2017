@@ -1,7 +1,6 @@
 package com.epam.jmp2017.model.loaders;
 
 import com.epam.jmp2017.constants.BaseConstants;
-import com.epam.jmp2017.util.Worker;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -17,7 +16,24 @@ public class ConditionsLoader extends ClassLoader {
     private String path;
     private static List<Class<?>> loadedClasses = new ArrayList<>();
 
-    public ConditionsLoader(String path, ClassLoader parent) {
+    //[module-3] Singleton
+    private static volatile ConditionsLoader instance = null;
+
+    public static ConditionsLoader getInstance() {
+        if (instance == null) {
+            synchronized (ConditionsLoader.class) {
+                if (instance == null) {
+                    instance = new ConditionsLoader(BaseConstants.PATH_CONDITIONS, ClassLoader.getSystemClassLoader());
+                }
+            }
+        }
+        return instance;
+    }
+
+    private ConditionsLoader() {
+    }
+
+    private ConditionsLoader(String path, ClassLoader parent) {
         super(parent);
         this.path = path;
     }
@@ -29,9 +45,8 @@ public class ConditionsLoader extends ClassLoader {
             if (result == null) {
                 result = super.loadClass(className);
                 if (result == null) {
-                    Worker worker = new Worker();
                     if (!className.contains(BaseConstants.PACKAGE_NAME)) {
-                        return worker.getClass().getClassLoader().loadClass(className);
+                        return getClass().getClassLoader().loadClass(className);
                     }
                     URL actionsUrl = new File(path + className.replace('.', '/') + ".class").toURI().toURL();
                     Path path;
