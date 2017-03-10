@@ -1,12 +1,17 @@
 package com.epam.jmp2017.model.conditions.impl;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.epam.jmp2017.constants.Messages;
 import com.epam.jmp2017.model.annotations.ConditionDescription;
 import com.epam.jmp2017.model.annotations.ConditionDisplayName;
 import com.epam.jmp2017.model.conditions.Condition;
 
+
 @ConditionDisplayName(name = "Length")
 public class LengthCondition implements Condition {
+    private static final Logger LOG = Logger.getLogger(LengthCondition.class.getName());
 
     @Override
     @ConditionDescription(
@@ -21,7 +26,7 @@ public class LengthCondition implements Condition {
             try {
                 return string.length() >= Integer.parseInt(value);
             } catch(NumberFormatException e) {
-                System.out.println(Messages.WRONG_MIN_LENGTH);
+                LOG.log(Level.SEVERE, Messages.WRONG_MIN_LENGTH, e);
             }
         }
 

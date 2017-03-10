@@ -1,13 +1,17 @@
 package com.epam.jmp2017.model.json;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.epam.jmp2017.model.conditions.Condition;
 import com.epam.jmp2017.model.enums.ActionType;
 import com.epam.jmp2017.model.enums.Attribute;
-import com.epam.jmp2017.util.Worker;
+import com.epam.jmp2017.model.loaders.ConditionsLoader;
 
 public class ActionModel {
+    private static final Logger LOG = Logger.getLogger(ActionModel.class.getName());
+
     private String name;
     private String type;
     private List<ConditionModel> conditions;
@@ -48,24 +52,21 @@ public class ActionModel {
         String attributeExpectedValue;
         int counter = 0;
         if (data != null) {
-            Worker worker = new Worker();
             for (ConditionModel conditionDto : conditions) {
                 attribute = Attribute.getValue(conditionDto.getAttribute());
                 if (attribute != null) {
                     attributeRealValue = data.get(attribute);
                     attributeExpectedValue = conditionDto.getValue();
                     if (attributeRealValue != null && attributeExpectedValue != null) {
-                        Class<?> conditionClass = worker.loadCondition(conditionDto.getClassName());
+                        Class<?> conditionClass = ConditionsLoader.loadCondition(conditionDto.getClassName());
                         if (conditionClass != null) {
                             try {
                                 Condition condition = (Condition) conditionClass.newInstance();
                                 if (condition != null && condition.check(attributeRealValue, attributeExpectedValue)) {
                                     counter++;
                                 }
-                            } catch (InstantiationException e) {
-                                e.printStackTrace();
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
+                            } catch (InstantiationException | IllegalAccessException e) {
+                                LOG.log(Level.SEVERE, e.getMessage(), e);
                             }
                         }
                     }
@@ -84,6 +85,8 @@ public class ActionModel {
                         return data.print();
                     case PRINT_UPPER:
                         return data.print().toUpperCase();
+                    default:
+                        return null;
                 }
             }
         }

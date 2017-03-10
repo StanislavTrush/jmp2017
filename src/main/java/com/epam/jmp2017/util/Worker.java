@@ -1,18 +1,13 @@
 package com.epam.jmp2017.util;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.epam.jmp2017.constants.BaseConstants;
-import com.epam.jmp2017.model.annotations.ConditionDisplayName;
-import com.epam.jmp2017.model.conditions.Condition;
 import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.model.json.ResultModel;
-import com.epam.jmp2017.model.loaders.ConditionsLoader;
 
 public class Worker {
     public String getTaskResult(String dataString) throws IOException {
@@ -46,31 +41,5 @@ public class Worker {
             return new ResultModel(data.getTypeCode(), resultString);
         }
         return null;
-    }
-
-    public void cacheConditions() {
-        File dir = new File(BaseConstants.PATH_CONDITIONS + BaseConstants.PACKAGE_NAME.replace(".", "/") + "/");
-        try {
-            for (File file : dir.listFiles()) {
-                loadCondition(BaseConstants.PACKAGE_NAME + "." + file.getName().replace(".class", ""));
-            }
-        } catch (NullPointerException e) {
-            System.out.println("Exception during reading Conditions class files");
-        }
-    }
-
-    public Class<?> loadCondition(String className) {
-        Class<?> result = null;
-        try {
-            result = ConditionsLoader.getInstance().loadClass(className);
-            if (result != null &&
-                    (!Condition.class.isAssignableFrom(result) || !result.isAnnotationPresent(ConditionDisplayName.class))) {
-                result = null;
-            }
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class " + className + " not found.");
-        }
-        return result;
     }
 }
