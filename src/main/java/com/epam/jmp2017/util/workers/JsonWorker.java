@@ -1,4 +1,4 @@
-package com.epam.jmp2017.util;
+package com.epam.jmp2017.util.workers;
 
 import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.model.json.ActionModel;

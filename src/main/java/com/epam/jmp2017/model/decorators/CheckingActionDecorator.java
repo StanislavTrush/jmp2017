@@ -17,7 +17,7 @@ public class CheckingActionDecorator extends BaseActionDecorator
 		String result = super.perform(data);
 		if (result == null && !check(data))
 		{
-			result = "Check was not passed for action with typeCode '" + data.getTypeCode() + "'";
+			result = "Check was not passed for action with typeCode " + data.getTypeCode() + "";
 		}
 		return result;
 	}

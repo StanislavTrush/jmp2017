@@ -24,7 +24,7 @@ public class ConditionsLoader extends ClassLoader {
     private static List<Class<?>> loadedClasses = new ArrayList<>();
 
     //[module-3] Singleton
-    private static volatile ConditionsLoader instance = null;
+    private static ConditionsLoader instance = null;
 
     private static final Logger LOG = Logger.getLogger(ConditionsLoader.class.getName());
 
