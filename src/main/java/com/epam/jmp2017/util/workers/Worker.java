@@ -52,17 +52,18 @@ public class Worker {
         boolean isLog = Boolean.parseBoolean(FileWorker.getProperty("actions.log"));
         boolean isCheck = Boolean.parseBoolean(FileWorker.getProperty("actions.check"));
         List<ActionModel> result = new ArrayList<>();
-        List<ActionModel> temp = new ArrayList<>();
-        if (isLog) {
-            actions.forEach((action) -> temp.add(new LoggingActionDecorator(action)));
-        } else {
-            temp.addAll(actions);
-        }
-        if (isCheck) {
-            temp.forEach((action) -> result.add(new CheckingActionDecorator(action)));
-        } else {
-            result.addAll(temp);
-        }
+
+        actions.forEach((action) -> {
+            ActionModel temp = action;
+            if (isLog) {
+                temp = new LoggingActionDecorator(temp);
+            }
+            if (isCheck) {
+                temp = new CheckingActionDecorator(temp);
+            }
+            result.add(temp);
+        });
+
         return result;
     }
 }

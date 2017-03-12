@@ -16,7 +16,8 @@ public class EqualsCondition extends CompositeCondition {
             description = "Checks if two strings are equal"
     )
     public boolean check(DataModel data, String string, String value) {
-        return (string != null && value != null && string.equals(value) || (string == null && value == null))
-                && super.check(data, string, value);
+        boolean isAttributesEmpty = string == null && value == null;
+        boolean isConditionPassed = string != null && value != null && string.equals(value);
+        return (isConditionPassed || isAttributesEmpty) && super.check(data, string, value);
     }
 }
