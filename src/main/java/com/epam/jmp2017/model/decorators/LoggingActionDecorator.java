@@ -8,7 +8,6 @@ import java.util.logging.SimpleFormatter;
 
 import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.model.json.DataModel;
-import com.epam.jmp2017.model.loaders.ConditionsLoader;
 
 
 public class LoggingActionDecorator extends BaseActionDecorator

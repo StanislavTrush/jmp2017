@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.constants.Messages;
 import com.epam.jmp2017.model.annotations.ConditionDisplayName;
-import com.epam.jmp2017.model.conditions.Condition;
+import com.epam.jmp2017.model.conditions.CompositeCondition;
 
 
 public class ConditionsLoader extends ClassLoader {
@@ -104,10 +104,13 @@ public class ConditionsLoader extends ClassLoader {
 
     public static Class<?> loadCondition(String className) {
         Class<?> result = null;
+        if (className == null || className.isEmpty()) {
+            className = "com.epam.jmp2017.model.conditions.CompositeCondition";
+        }
         try {
             result = ConditionsLoader.getInstance().loadClass(className);
             if (result != null &&
-                  (!Condition.class.isAssignableFrom(result) || !result.isAnnotationPresent(ConditionDisplayName.class))) {
+                  (!CompositeCondition.class.isAssignableFrom(result) || !result.isAnnotationPresent(ConditionDisplayName.class))) {
                 result = null;
             }
 

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.epam.jmp2017.model.conditions.Condition;
+import com.epam.jmp2017.model.conditions.CompositeCondition;
 import com.epam.jmp2017.model.enums.ActionType;
 import com.epam.jmp2017.model.enums.Attribute;
 import com.epam.jmp2017.model.loaders.ConditionsLoader;
@@ -57,21 +57,22 @@ public class ActionModel {
         if (data != null) {
             for (ConditionModel conditionDto : conditions) {
                 attribute = Attribute.getValue(conditionDto.getAttribute());
-                if (attribute != null) {
-                    attributeRealValue = data.get(attribute);
-                    attributeExpectedValue = conditionDto.getValue();
-                    if (attributeRealValue != null && attributeExpectedValue != null) {
-                        Class<?> conditionClass = ConditionsLoader.loadCondition(conditionDto.getClassName());
-                        if (conditionClass != null) {
-                            try {
-                                Condition condition = (Condition) conditionClass.newInstance();
-                                if (condition != null && condition.check(attributeRealValue, attributeExpectedValue)) {
-                                    counter++;
-                                }
-                            } catch (InstantiationException | IllegalAccessException e) {
-                                LOG.log(Level.SEVERE, e.getMessage(), e);
+                attributeRealValue = data.get(attribute);
+                attributeExpectedValue = conditionDto.getValue();
+                Class<?> conditionClass = ConditionsLoader.loadCondition(conditionDto.getClassName());
+                if (conditionClass != null) {
+                    CompositeCondition condition;
+                    try {
+                        condition = (CompositeCondition) conditionClass.newInstance();
+                        if (condition != null) {
+                            condition.setConditions(conditionDto.getConditions());
+                            condition.setOperation(conditionDto.getOperation());
+                            if (condition.check(data, attributeRealValue, attributeExpectedValue)) {
+                                counter++;
                             }
                         }
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        LOG.log(Level.SEVERE, e.getMessage(), e);
                     }
                 }
             }
