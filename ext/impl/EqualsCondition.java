@@ -2,10 +2,11 @@ package com.epam.jmp2017.model.conditions.impl;
 
 import com.epam.jmp2017.model.annotations.ConditionDescription;
 import com.epam.jmp2017.model.annotations.ConditionDisplayName;
-import com.epam.jmp2017.model.conditions.Condition;
+import com.epam.jmp2017.model.conditions.CompositeCondition;
+import com.epam.jmp2017.model.json.DataModel;
 
 @ConditionDisplayName(name = "Equals")
-public class EqualsCondition implements Condition {
+public class EqualsCondition extends CompositeCondition {
     @Override
     @ConditionDescription(
             parameters = {
@@ -14,7 +15,9 @@ public class EqualsCondition implements Condition {
             },
             description = "Checks if two strings are equal"
     )
-    public boolean check(String string, String value) {
-        return string !=null && value != null && string.equals(value);
+    public boolean check(DataModel data, String string, String value) {
+        boolean isAttributesEmpty = string == null && value == null;
+        boolean isConditionPassed = string != null && value != null && string.equals(value);
+        return (isConditionPassed || isAttributesEmpty) && super.check(data, string, value);
     }
 }

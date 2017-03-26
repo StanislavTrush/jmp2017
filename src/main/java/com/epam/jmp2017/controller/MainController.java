@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.constants.WebConstants;
-import com.epam.jmp2017.util.Worker;
+import com.epam.jmp2017.model.loaders.ConditionsLoader;
+import com.epam.jmp2017.util.workers.Worker;
 
 //YAGNI
 //Not overriding all the methods with differend implementations
@@ -32,9 +33,9 @@ public class MainController extends HttpServlet
 	//DRY
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType(WebConstants.TYPE_CONTENT);
-		Worker worker = new Worker();
-		worker.cacheConditions();
+		ConditionsLoader.cacheConditions();
 		PrintWriter out = response.getWriter();
+		Worker worker = new Worker();
 		out.print(worker.getTaskResult(request.getParameter(BaseConstants.ATTR_DATA)));
 	}
 }

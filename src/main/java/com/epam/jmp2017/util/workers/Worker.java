@@ -1,23 +1,23 @@
-package com.epam.jmp2017.util;
+package com.epam.jmp2017.util.workers;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.epam.jmp2017.constants.BaseConstants;
-import com.epam.jmp2017.model.annotations.ConditionDisplayName;
-import com.epam.jmp2017.model.conditions.Condition;
+import com.epam.jmp2017.model.decorators.CheckingActionDecorator;
+import com.epam.jmp2017.model.decorators.LoggingActionDecorator;
 import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.model.json.ResultModel;
-import com.epam.jmp2017.model.loaders.ConditionsLoader;
 
 public class Worker {
     public String getTaskResult(String dataString) throws IOException {
         List<DataModel> dataList = JsonWorker.parseData(dataString);
         List<ActionModel> actions = JsonWorker.parseActions();
+        if (actions != null && !actions.isEmpty()) {
+            actions = decorateActions(actions);
+        }
         return getActionsResults(dataList, actions);
     }
 
@@ -48,29 +48,22 @@ public class Worker {
         return null;
     }
 
-    public void cacheConditions() {
-        File dir = new File(BaseConstants.PATH_CONDITIONS + BaseConstants.PACKAGE_NAME.replace(".", "/") + "/");
-        try {
-            for (File file : dir.listFiles()) {
-                loadCondition(BaseConstants.PACKAGE_NAME + "." + file.getName().replace(".class", ""));
-            }
-        } catch (NullPointerException e) {
-            System.out.println("Exception during reading Conditions class files");
-        }
-    }
+    private List<ActionModel> decorateActions(List<ActionModel> actions) {
+        boolean isLog = Boolean.parseBoolean(FileWorker.getProperty("actions.log"));
+        boolean isCheck = Boolean.parseBoolean(FileWorker.getProperty("actions.check"));
+        List<ActionModel> result = new ArrayList<>();
 
-    public Class<?> loadCondition(String className) {
-        Class<?> result = null;
-        try {
-            result = ConditionsLoader.getInstance().loadClass(className);
-            if (result != null &&
-                    (!Condition.class.isAssignableFrom(result) || !result.isAnnotationPresent(ConditionDisplayName.class))) {
-                result = null;
+        actions.forEach((action) -> {
+            ActionModel temp = action;
+            if (isLog) {
+                temp = new LoggingActionDecorator(temp);
             }
+            if (isCheck) {
+                temp = new CheckingActionDecorator(temp);
+            }
+            result.add(temp);
+        });
 
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class " + className + " not found.");
-        }
         return result;
     }
 }

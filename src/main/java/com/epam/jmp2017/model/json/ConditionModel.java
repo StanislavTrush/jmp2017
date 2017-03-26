@@ -1,10 +1,26 @@
 package com.epam.jmp2017.model.json;
 
+import java.util.List;
+
 public class ConditionModel {
+    private List<ConditionModel> conditions;
+    private String operation;
     private String attribute;
     private String value;
     private String className;
 
+    public List<ConditionModel> getConditions() {
+        return conditions;
+    }
+    public void setConditions(List<ConditionModel> conditions) {
+        this.conditions = conditions;
+    }
+    public String getOperation() {
+        return operation;
+    }
+    public void setOperation(String operation) {
+        this.operation = operation;
+    }
     public String getAttribute() {
         return attribute;
     }
@@ -24,7 +40,9 @@ public class ConditionModel {
         this.className = className;
     }
 
-    public ConditionModel(String attribute, String value, String className) {
+    public ConditionModel(List<ConditionModel> conditions, String operation, String attribute, String value, String className) {
+        this.conditions = conditions;
+        this.operation = operation;
         this.attribute = attribute;
         this.value = value;
         this.className = className;

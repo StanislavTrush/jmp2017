@@ -4,9 +4,32 @@
     "type":"PRINT",
     "conditions":[
       {
-        "attribute": "color",
-        "value": "Black",
-        "className": "com.epam.jmp2017.model.conditions.impl.EqualsCondition"
+        "operation": "OR",
+        "conditions":
+        [
+
+          {
+            "operation": "AND",
+            "conditions":
+            [
+              {
+                "attribute": "name",
+                "value": "Doge",
+                "className": "com.epam.jmp2017.model.conditions.impl.EqualsCondition"
+              },
+              {
+                "attribute": "color",
+                "value": "3",
+                "className": "com.epam.jmp2017.model.conditions.impl.LengthCondition"
+              }
+            ]
+          },
+          {
+            "attribute": "color",
+            "value": "3",
+            "className": "com.epam.jmp2017.model.conditions.impl.LengthCondition"
+          }
+        ]
       }
     ]
   },
