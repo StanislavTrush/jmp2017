@@ -8,8 +8,12 @@ import com.epam.jmp2017.model.conditions.CompositeCondition;
 import com.epam.jmp2017.model.enums.ActionType;
 import com.epam.jmp2017.model.enums.Attribute;
 import com.epam.jmp2017.model.loaders.ConditionsLoader;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ActionModel {
+    @Autowired
+    private ConditionsLoader conditionsLoader;
+
     private static final Logger LOG = Logger.getLogger(ActionModel.class.getName());
 
     private String name;
@@ -59,7 +63,7 @@ public class ActionModel {
                 attribute = Attribute.getValue(conditionDto.getAttribute());
                 attributeRealValue = data.get(attribute);
                 attributeExpectedValue = conditionDto.getValue();
-                Class<?> conditionClass = ConditionsLoader.loadCondition(conditionDto.getClassName());
+                Class<?> conditionClass = conditionsLoader.loadCondition(conditionDto.getClassName());
                 if (conditionClass != null) {
                     CompositeCondition condition;
                     try {

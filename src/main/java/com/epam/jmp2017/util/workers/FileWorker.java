@@ -1,7 +1,5 @@
 package com.epam.jmp2017.util.workers;
 
-import com.epam.jmp2017.model.loaders.ConditionsLoader;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -12,7 +10,7 @@ public class FileWorker {
     private static void loadProperties() {
         InputStream fis;
         if (properties == null) {
-            synchronized (ConditionsLoader.class) {
+            synchronized (FileWorker.class) {
                 if (properties == null) {
                     try {
                         properties = new Properties();

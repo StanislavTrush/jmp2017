@@ -6,6 +6,7 @@ import com.epam.jmp2017.model.enums.Attribute;
 import com.epam.jmp2017.model.json.ConditionModel;
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.model.loaders.ConditionsLoader;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -15,6 +16,9 @@ import java.util.logging.Logger;
         name = "Composite"
 )
 public class CompositeCondition implements Condition {
+    @Autowired
+    private ConditionsLoader conditionsLoader;
+
     private static final Logger LOG = Logger.getLogger(CompositeCondition.class.getName());
     private List<ConditionModel> conditions;
     private String operation;
@@ -57,7 +61,7 @@ public class CompositeCondition implements Condition {
             attribute = Attribute.getValue(condition.getAttribute());
             attributeRealValue = data.get(attribute);
             attributeExpectedValue = condition.getValue();
-            Class<?> conditionClass = ConditionsLoader.loadCondition(condition.getClassName());
+            Class<?> conditionClass = conditionsLoader.loadCondition(condition.getClassName());
             if (conditionClass != null) {
                 try {
                     CompositeCondition subCondition = (CompositeCondition) conditionClass.newInstance();

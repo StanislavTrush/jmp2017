@@ -13,12 +13,18 @@ import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.constants.WebConstants;
 import com.epam.jmp2017.model.loaders.ConditionsLoader;
 import com.epam.jmp2017.util.workers.Worker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 //YAGNI
-//Not overriding all the methods with differend implementations
+//Not overriding all the methods with different implementations
 @WebServlet(WebConstants.URL_PROCESS)
 public class MainController extends HttpServlet
 {
+	//@Autowired
+	//private ConditionsLoader conditionsLoader;
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -33,7 +39,10 @@ public class MainController extends HttpServlet
 	//DRY
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType(WebConstants.TYPE_CONTENT);
-		ConditionsLoader.cacheConditions();
+		ApplicationContext context = new ClassPathXmlApplicationContext("jmp-beans.xml");
+
+		ConditionsLoader conditionsLoader = (ConditionsLoader)context.getBean("conditionsLoader");
+		conditionsLoader.cacheConditions();
 		PrintWriter out = response.getWriter();
 		Worker worker = new Worker();
 		out.print(worker.getTaskResult(request.getParameter(BaseConstants.ATTR_DATA)));
