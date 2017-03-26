@@ -3,7 +3,10 @@ package com.epam.jmp2017.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +17,7 @@ import com.epam.jmp2017.constants.WebConstants;
 import com.epam.jmp2017.model.loaders.ConditionsLoader;
 import com.epam.jmp2017.util.workers.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -22,8 +26,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @WebServlet(WebConstants.URL_PROCESS)
 public class MainController extends HttpServlet
 {
-	//@Autowired
-	//private ConditionsLoader conditionsLoader;
+	//private ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
+	@Autowired
+	@Qualifier("ConditionsLoader")
+	//Resource(name = "conditionsLoader")
+	private ConditionsLoader conditionsLoader;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -39,9 +46,8 @@ public class MainController extends HttpServlet
 	//DRY
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType(WebConstants.TYPE_CONTENT);
-		ApplicationContext context = new ClassPathXmlApplicationContext("jmp-beans.xml");
 
-		ConditionsLoader conditionsLoader = (ConditionsLoader)context.getBean("conditionsLoader");
+		//ConditionsLoader conditionsLoader = (ConditionsLoader)context.getBean("conditionsLoader");
 		conditionsLoader.cacheConditions();
 		PrintWriter out = response.getWriter();
 		Worker worker = new Worker();

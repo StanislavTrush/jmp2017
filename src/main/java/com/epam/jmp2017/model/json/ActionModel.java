@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ActionModel {
     @Autowired
-    private ConditionsLoader conditionsLoader;
+    private static ConditionsLoader conditionsLoader;
 
     private static final Logger LOG = Logger.getLogger(ActionModel.class.getName());
 
