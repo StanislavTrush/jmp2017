@@ -5,7 +5,7 @@ import com.epam.jmp2017.model.annotations.ConditionDisplayName;
 import com.epam.jmp2017.model.enums.Attribute;
 import com.epam.jmp2017.model.json.ConditionModel;
 import com.epam.jmp2017.model.json.DataModel;
-import com.epam.jmp2017.model.loaders.ConditionsLoader;
+import com.epam.jmp2017.util.loaders.ConditionsLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

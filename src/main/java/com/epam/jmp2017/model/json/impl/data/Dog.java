@@ -3,7 +3,9 @@ package com.epam.jmp2017.model.json.impl.data;
 import com.epam.jmp2017.model.enums.Attribute;
 import com.epam.jmp2017.model.json.DataModel;
 
+import javax.enterprise.inject.Model;
 
+@Model
 public class Dog implements DataModel {
     private String name;
     private String color;

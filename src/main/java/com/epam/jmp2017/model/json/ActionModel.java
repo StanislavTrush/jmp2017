@@ -7,9 +7,12 @@ import java.util.logging.Logger;
 import com.epam.jmp2017.model.conditions.CompositeCondition;
 import com.epam.jmp2017.model.enums.ActionType;
 import com.epam.jmp2017.model.enums.Attribute;
-import com.epam.jmp2017.model.loaders.ConditionsLoader;
+import com.epam.jmp2017.util.loaders.ConditionsLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.enterprise.inject.Model;
+
+@Model
 public class ActionModel {
     @Autowired
     private static ConditionsLoader conditionsLoader;

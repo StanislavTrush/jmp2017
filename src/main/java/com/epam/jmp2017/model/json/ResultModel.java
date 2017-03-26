@@ -1,5 +1,8 @@
 package com.epam.jmp2017.model.json;
 
+import javax.enterprise.inject.Model;
+
+@Model
 public class ResultModel {
     private int typeCode;
     private String result;

@@ -1,4 +1,4 @@
-package com.epam.jmp2017.model.loaders;
+package com.epam.jmp2017.util.loaders;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +17,6 @@ import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.constants.Messages;
 import com.epam.jmp2017.model.annotations.ConditionDisplayName;
 import com.epam.jmp2017.model.conditions.CompositeCondition;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
