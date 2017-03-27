@@ -17,9 +17,7 @@ import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.constants.Messages;
 import com.epam.jmp2017.model.annotations.ConditionDisplayName;
 import com.epam.jmp2017.model.conditions.CompositeCondition;
-import org.springframework.stereotype.Service;
 
-@Service
 public class ConditionsLoader extends ClassLoader {
     private String path;
     private List<Class<?>> loadedClasses = new ArrayList<>();

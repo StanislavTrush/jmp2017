@@ -1,9 +1,7 @@
 package com.epam.jmp2017.model.json;
 
-import javax.enterprise.inject.Model;
 import java.util.List;
 
-@Model
 public class ConditionModel {
     private List<ConditionModel> conditions;
     private String operation;

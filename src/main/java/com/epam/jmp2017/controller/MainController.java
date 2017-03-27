@@ -14,20 +14,24 @@ import com.epam.jmp2017.constants.WebConstants;
 import com.epam.jmp2017.util.loaders.ConditionsLoader;
 import com.epam.jmp2017.util.workers.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 //YAGNI
 //Not overriding all the methods with different implementations
-@Controller
 @WebServlet(WebConstants.URL_PROCESS)
-public class MainController extends HttpServlet
-{
-	//private ApplicationContext context = new ClassPathXmlApplicationContext("mvc-dispatcher-servlet.xml");
+public class MainController extends HttpServlet {
 	@Autowired
-	@Qualifier("loader")
-	//@Resource(name = "conditionsLoader")
+	private Worker worker;
+	@Autowired
 	private ConditionsLoader conditionsLoader;
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, getServletContext());
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -43,12 +47,7 @@ public class MainController extends HttpServlet
 	//DRY
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType(WebConstants.TYPE_CONTENT);
-
-		//ConditionsLoader conditionsLoader = (ConditionsLoader)context.getBean("conditionsLoader");
-		//ConditionsLoader conditionsLoader = (ConditionsLoader)WebApplicationContextUtils.getWebApplicationContext(getServletContext()).getBean("conditionsLoader");
-		//conditionsLoader.cacheConditions();
 		PrintWriter out = response.getWriter();
-		Worker worker = new Worker();
 		out.print(worker.getTaskResult(request.getParameter(BaseConstants.ATTR_DATA)));
 	}
 }

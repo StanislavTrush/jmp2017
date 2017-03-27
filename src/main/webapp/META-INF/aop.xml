@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<aspectj>
+    <weaver options="-showWeaveInfo">
+        <include within="com.epam.jmp2017.*"/>
+    </weaver>
+
+    <aspects>
+        <aspect name="org.springframework.beans.factory.aspectj.AnnotationBeanConfigurerAspect"/>
+        <aspect name="org.springframework.scheduling.aspectj.AnnotationAsyncExecutionAspect"/>
+        <aspect name="org.springframework.transaction.aspectj.AnnotationTransactionAspect"/>
+        <aspect name="org.springframework.cache.aspectj.AnnotationCacheAspect"/>
+    </aspects>
+</aspectj>

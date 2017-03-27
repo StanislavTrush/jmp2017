@@ -5,7 +5,6 @@ import com.epam.jmp2017.model.json.DataModel;
 
 import javax.enterprise.inject.Model;
 
-@Model
 public class BaseActionDecorator extends ActionModel
 {
 	private ActionModel decorated;

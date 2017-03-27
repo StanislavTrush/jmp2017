@@ -11,7 +11,6 @@ import com.epam.jmp2017.model.json.DataModel;
 
 import javax.enterprise.inject.Model;
 
-@Model
 public class LoggingActionDecorator extends BaseActionDecorator
 {
 	private static Logger LOG = null;

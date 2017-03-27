@@ -10,12 +10,14 @@ import com.epam.jmp2017.model.enums.Attribute;
 import com.epam.jmp2017.util.loaders.ConditionsLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.enterprise.inject.Model;
-
-@Model
 public class ActionModel {
-    @Autowired
+
     private static ConditionsLoader conditionsLoader;
+
+    @Autowired
+    public void setConditionsLoader(ConditionsLoader conditionsLoader) {
+        ActionModel.conditionsLoader = conditionsLoader;
+    }
 
     private static final Logger LOG = Logger.getLogger(ActionModel.class.getName());
 
