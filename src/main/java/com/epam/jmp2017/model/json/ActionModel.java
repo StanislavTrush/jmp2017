@@ -9,12 +9,14 @@ import com.epam.jmp2017.model.enums.ActionType;
 import com.epam.jmp2017.model.enums.Attribute;
 import com.epam.jmp2017.util.loaders.ConditionsLoader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public class ActionModel {
 
     private static ConditionsLoader conditionsLoader;
 
     @Autowired
+    @Qualifier("loader")
     public void setConditionsLoader(ConditionsLoader conditionsLoader) {
         ActionModel.conditionsLoader = conditionsLoader;
     }

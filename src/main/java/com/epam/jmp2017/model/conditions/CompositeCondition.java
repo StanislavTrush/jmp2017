@@ -10,6 +10,7 @@ import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.util.loaders.ConditionsLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
 )
 public class CompositeCondition implements Condition {
     @Autowired
+    @Qualifier("loader")
     private ConditionsLoader conditionsLoader;
 
     private static final Logger LOG = Logger.getLogger(CompositeCondition.class.getName());

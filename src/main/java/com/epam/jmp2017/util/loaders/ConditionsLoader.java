@@ -17,6 +17,7 @@ import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.constants.Messages;
 import com.epam.jmp2017.model.annotations.ConditionDisplayName;
 import com.epam.jmp2017.model.conditions.CompositeCondition;
+import org.springframework.beans.factory.annotation.Required;
 
 public class ConditionsLoader extends ClassLoader {
     private String path;
@@ -36,6 +37,7 @@ public class ConditionsLoader extends ClassLoader {
     public String getPath() {
         return path;
     }
+    @Required
     public void setPath(String path) {
         this.path = path;
     }

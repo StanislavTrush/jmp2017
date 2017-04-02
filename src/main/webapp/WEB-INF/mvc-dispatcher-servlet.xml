@@ -14,8 +14,9 @@
     <bean id="mainController" class="com.epam.jmp2017.controller.MainController"/>
 
     <alias name="conditionsLoader" alias="loader" />
-    <bean id="conditionsLoader" class="com.epam.jmp2017.util.loaders.ConditionsLoader" init-method="cacheConditions">
-        <property name="path" value="D:/Programing/Workspace/Repositories/jmp2017/conditions/" />
+    <bean id="conditionsLoader" class="com.epam.jmp2017.util.loaders.ConditionsLoader" init-method="cacheConditions"
+          scope="singleton">
+        <property name="path" value="D:/Programing/Workspace/Repositories/jmp2017/conditions/"/>
     </bean>
 
     <bean id="actionModel" class="com.epam.jmp2017.model.json.ActionModel" />

@@ -14,6 +14,7 @@ import com.epam.jmp2017.constants.WebConstants;
 import com.epam.jmp2017.util.loaders.ConditionsLoader;
 import com.epam.jmp2017.util.workers.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -25,6 +26,7 @@ public class MainController extends HttpServlet {
 	@Autowired
 	private Worker worker;
 	@Autowired
+	@Qualifier("loader")
 	private ConditionsLoader conditionsLoader;
 
 	@Override
