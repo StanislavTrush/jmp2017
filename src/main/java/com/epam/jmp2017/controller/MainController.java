@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.constants.WebConstants;
 import com.epam.jmp2017.util.loaders.ConditionsLoader;
+import com.epam.jmp2017.util.workers.DBWorker;
 import com.epam.jmp2017.util.workers.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -49,6 +50,9 @@ public class MainController extends HttpServlet {
 	//DRY
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType(WebConstants.TYPE_CONTENT);
+
+		DBWorker.test();
+
 		PrintWriter out = response.getWriter();
 		out.print(worker.getTaskResult(request.getParameter(BaseConstants.ATTR_DATA)));
 	}
