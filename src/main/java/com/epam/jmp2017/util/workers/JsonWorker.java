@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonWorker {
-    private static JsonParser parser = new JsonParser();
+    private JsonParser parser = new JsonParser();
 
-    public static List<DataModel> parseData(String dataString) {
+    public List<DataModel> parseData(String dataString) {
         List<DataModel> dataList = new ArrayList<>();
         JsonReader reader = new JsonReader(new StringReader(dataString));
         reader.setLenient(true);
@@ -48,7 +48,7 @@ public class JsonWorker {
         return dataList;
     }
 
-    public static List<ActionModel> parseActions() throws IOException {
+    public List<ActionModel> parseActions() throws IOException {
         Gson gson = new Gson();
         List<ActionModel> actions = new ArrayList<>();
         ClassLoader classLoader = JsonWorker.class.getClassLoader();
@@ -70,7 +70,7 @@ public class JsonWorker {
         return actions;
     }
 
-    public static String toJson(Object obj) {
+    public String toJson(Object obj) {
         return new Gson().toJson(obj);
     }
 }

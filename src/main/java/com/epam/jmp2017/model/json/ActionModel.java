@@ -7,9 +7,20 @@ import java.util.logging.Logger;
 import com.epam.jmp2017.model.conditions.CompositeCondition;
 import com.epam.jmp2017.model.enums.ActionType;
 import com.epam.jmp2017.model.enums.Attribute;
-import com.epam.jmp2017.model.loaders.ConditionsLoader;
+import com.epam.jmp2017.util.loaders.ConditionsLoader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public class ActionModel {
+
+    private static ConditionsLoader conditionsLoader;
+
+    @Autowired
+    @Qualifier("loader")
+    public void setConditionsLoader(ConditionsLoader conditionsLoader) {
+        ActionModel.conditionsLoader = conditionsLoader;
+    }
+
     private static final Logger LOG = Logger.getLogger(ActionModel.class.getName());
 
     private String name;
@@ -59,7 +70,7 @@ public class ActionModel {
                 attribute = Attribute.getValue(conditionDto.getAttribute());
                 attributeRealValue = data.get(attribute);
                 attributeExpectedValue = conditionDto.getValue();
-                Class<?> conditionClass = ConditionsLoader.loadCondition(conditionDto.getClassName());
+                Class<?> conditionClass = conditionsLoader.loadCondition(conditionDto.getClassName());
                 if (conditionClass != null) {
                     CompositeCondition condition;
                     try {

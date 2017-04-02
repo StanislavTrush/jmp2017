@@ -3,6 +3,8 @@ package com.epam.jmp2017.model.json.impl.data;
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.model.enums.Attribute;
 
+import javax.enterprise.inject.Model;
+
 public class Fridge implements DataModel {
     private int weight;
     private String brand;

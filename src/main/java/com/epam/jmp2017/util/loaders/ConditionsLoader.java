@@ -1,4 +1,4 @@
-package com.epam.jmp2017.model.loaders;
+package com.epam.jmp2017.util.loaders;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,33 +17,28 @@ import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.constants.Messages;
 import com.epam.jmp2017.model.annotations.ConditionDisplayName;
 import com.epam.jmp2017.model.conditions.CompositeCondition;
-
+import org.springframework.beans.factory.annotation.Required;
 
 public class ConditionsLoader extends ClassLoader {
     private String path;
-    private static List<Class<?>> loadedClasses = new ArrayList<>();
+    private List<Class<?>> loadedClasses = new ArrayList<>();
 
-    //[module-3] Singleton
-    private static ConditionsLoader instance = null;
+    private final Logger LOG = Logger.getLogger(ConditionsLoader.class.getName());
 
-    private static final Logger LOG = Logger.getLogger(ConditionsLoader.class.getName());
-
-    public static ConditionsLoader getInstance() {
-        if (instance == null) {
-            synchronized (ConditionsLoader.class) {
-                if (instance == null) {
-                    instance = new ConditionsLoader(BaseConstants.PATH_CONDITIONS, ClassLoader.getSystemClassLoader());
-                }
-            }
-        }
-        return instance;
+    public ConditionsLoader() {
+        super(ClassLoader.getSystemClassLoader());
     }
 
-    private ConditionsLoader() {
-    }
-
-    private ConditionsLoader(String path, ClassLoader parent) {
+    public ConditionsLoader(String path, ClassLoader parent) {
         super(parent);
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+    @Required
+    public void setPath(String path) {
         this.path = path;
     }
 
@@ -91,7 +86,7 @@ public class ConditionsLoader extends ClassLoader {
         return result;
     }
 
-    public static void cacheConditions() {
+    public void cacheConditions() {
         File dir = new File(BaseConstants.PATH_CONDITIONS + BaseConstants.PACKAGE_NAME.replace(".", "/") + "/");
         try {
             for (File file : dir.listFiles()) {
@@ -102,13 +97,13 @@ public class ConditionsLoader extends ClassLoader {
         }
     }
 
-    public static Class<?> loadCondition(String className) {
+    public Class<?> loadCondition(String className) {
         Class<?> result = null;
         if (className == null || className.isEmpty()) {
             className = "com.epam.jmp2017.model.conditions.CompositeCondition";
         }
         try {
-            result = ConditionsLoader.getInstance().loadClass(className);
+            result = loadClass(className);
             if (result != null &&
                   (!CompositeCondition.class.isAssignableFrom(result) || !result.isAnnotationPresent(ConditionDisplayName.class))) {
                 result = null;

@@ -6,7 +6,7 @@
 2. **_Backend: Class loading_**
 3. **_Architecture: Creational Patterns_**
 4. **_Architecture: Structural Patterns_**
-5. Backend: Spring Core Basics
+5. **_Backend: Spring Core Basics_**
 6. Infrastructure: JDBC  Advanced Techniques (+ Spring JDBC)
 7. Infrastructure: Continuous Integration Concepts (Jenkins)
 8. Backend: Spring MVC
