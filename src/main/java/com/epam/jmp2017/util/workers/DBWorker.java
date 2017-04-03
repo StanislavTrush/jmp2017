@@ -14,21 +14,6 @@ public class DBWorker {
     private Statement stmt = null;
     private ResultSet rs = null;
 
-
-
-    protected void init() {
-        try
-        {
-            Class.forName(JDBC_DRIVER);
-        }
-        catch (ClassNotFoundException e)
-        {
-            LOG.log(Level.WARNING, e.getMessage(), e);
-        }
-    }
-
-
-
     public void test() {
         try{
             System.out.println("Connecting to mysql...");

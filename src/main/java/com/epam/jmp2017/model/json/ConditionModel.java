@@ -40,6 +40,9 @@ public class ConditionModel {
         this.className = className;
     }
 
+    public ConditionModel() {
+    }
+
     public ConditionModel(List<ConditionModel> conditions, String operation, String attribute, String value, String className) {
         this.conditions = conditions;
         this.operation = operation;

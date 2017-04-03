@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.epam.jmp2017.model.dao.IActionDao;
+import com.epam.jmp2017.model.dao.IConditionDao;
 import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.util.workers.PropertyManager;
 
@@ -22,16 +23,15 @@ public class ActionDaoDb implements IActionDao
 		Statement stmt = null;
 		ResultSet rs = null;
 		ActionModel action;
+		IConditionDao conditionDao = new ConditionDaoDb();
 
 		try{
-			System.out.println("Connecting to mysql...");
 			conn = DriverManager.getConnection(
 					PropertyManager.getProperty("database.url"),
 					PropertyManager.getProperty("database.user"),
 					PropertyManager.getProperty("database.password")
 			);
 
-			System.out.println("Creating statement...");
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT id, name, type FROM Actions");
 
@@ -39,6 +39,7 @@ public class ActionDaoDb implements IActionDao
 				action = new ActionModel();
 				action.setName(rs.getString("name"));
 				action.setType(rs.getString("type"));
+				action.setConditions(conditionDao.getConditionsForActionId(rs.getInt("id")));
 				actions.add(action);
 			}
 		}catch(SQLException e){

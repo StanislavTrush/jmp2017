@@ -2,6 +2,7 @@ package com.epam.jmp2017.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,8 +26,8 @@ import com.epam.jmp2017.util.workers.Worker;
 public class MainController extends HttpServlet {
 	@Autowired
 	private Worker worker;
-	@Autowired
-	private DBWorker dbWorker;
+	//@Autowired
+	//private DBWorker dbWorker;
 	@Autowired
 	@Qualifier("loader")
 	private ConditionsLoader conditionsLoader;
@@ -34,6 +35,15 @@ public class MainController extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
+		/*try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!driver loaded");
+		}
+		catch (ClassNotFoundException e)
+		{
+			//LOG.log(Level.WARNING, e.getMessage(), e);
+		}*/
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, getServletContext());
 	}
 
@@ -52,7 +62,7 @@ public class MainController extends HttpServlet {
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType(WebConstants.TYPE_CONTENT);
 
-		dbWorker.test();
+		//dbWorker.test();
 
 		PrintWriter out = response.getWriter();
 		out.print(worker.getTaskResult(request.getParameter(BaseConstants.ATTR_DATA)));

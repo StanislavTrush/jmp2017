@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import com.epam.jmp2017.model.dao.mysql.ActionDaoDb;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.epam.jmp2017.model.dao.IActionDao;
@@ -22,7 +23,7 @@ public class Worker {
     public String getTaskResult(String dataString) throws IOException {
         List<DataModel> dataList = jsonWorker.parseData(dataString);
         sortDataByTypeCode(dataList);
-        IActionDao actionDao = new ActionDaoJson();
+        IActionDao actionDao = new ActionDaoDb();
         List<ActionModel> actions = actionDao.getAllActions();
         if (actions != null && !actions.isEmpty()) {
             actions = decorateActions(actions);
