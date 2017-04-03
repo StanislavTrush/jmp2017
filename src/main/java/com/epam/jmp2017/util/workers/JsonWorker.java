@@ -1,7 +1,9 @@
 package com.epam.jmp2017.util.workers;
 
-import com.epam.jmp2017.constants.BaseConstants;
-import com.epam.jmp2017.model.json.ActionModel;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.util.factories.DataFactory;
 import com.google.gson.Gson;
@@ -9,14 +11,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.StringReader;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class JsonWorker {
     private JsonParser parser = new JsonParser();
@@ -46,28 +40,6 @@ public class JsonWorker {
             }
         }
         return dataList;
-    }
-
-    public List<ActionModel> parseActions() throws IOException {
-        Gson gson = new Gson();
-        List<ActionModel> actions = new ArrayList<>();
-        ClassLoader classLoader = JsonWorker.class.getClassLoader();
-        URL actionsUrl = classLoader.getResource(BaseConstants.FILE_ACTIONS);
-        if (actionsUrl != null) {
-            File file = new File(actionsUrl.getFile());
-            JsonArray jsonActions = (JsonArray) parser.parse(new FileReader(file));
-            ActionModel action;
-
-            for (JsonElement jsonElement : jsonActions) {
-                if (jsonElement.isJsonObject()) {
-                    action = gson.fromJson(jsonElement.getAsJsonObject(), ActionModel.class);
-                    if (action != null) {
-                        actions.add(action);
-                    }
-                }
-            }
-        }
-        return actions;
     }
 
     public String toJson(Object obj) {

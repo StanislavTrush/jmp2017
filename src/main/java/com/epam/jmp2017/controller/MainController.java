@@ -9,16 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
 import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.constants.WebConstants;
 import com.epam.jmp2017.util.loaders.ConditionsLoader;
 import com.epam.jmp2017.util.workers.DBWorker;
 import com.epam.jmp2017.util.workers.Worker;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 //YAGNI
 //Not overriding all the methods with different implementations
@@ -26,6 +25,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 public class MainController extends HttpServlet {
 	@Autowired
 	private Worker worker;
+	@Autowired
+	private DBWorker dbWorker;
 	@Autowired
 	@Qualifier("loader")
 	private ConditionsLoader conditionsLoader;
@@ -51,7 +52,7 @@ public class MainController extends HttpServlet {
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType(WebConstants.TYPE_CONTENT);
 
-		DBWorker.test();
+		dbWorker.test();
 
 		PrintWriter out = response.getWriter();
 		out.print(worker.getTaskResult(request.getParameter(BaseConstants.ATTR_DATA)));

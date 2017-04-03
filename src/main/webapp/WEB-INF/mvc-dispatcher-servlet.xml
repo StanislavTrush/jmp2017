@@ -31,4 +31,6 @@
 
     <bean id="jsonWorker" class="com.epam.jmp2017.util.workers.JsonWorker" />
 
+    <bean id="dbWorker" class="com.epam.jmp2017.util.workers.DBWorker" init-method="init" />
+
 </beans>

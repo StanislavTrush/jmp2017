@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.epam.jmp2017.model.dao.IActionDao;
+import com.epam.jmp2017.model.dao.json.ActionDaoJson;
 import com.epam.jmp2017.model.decorators.CheckingActionDecorator;
 import com.epam.jmp2017.model.decorators.LoggingActionDecorator;
 import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.model.json.ResultModel;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class Worker {
     @Autowired
@@ -19,7 +22,8 @@ public class Worker {
     public String getTaskResult(String dataString) throws IOException {
         List<DataModel> dataList = jsonWorker.parseData(dataString);
         sortDataByTypeCode(dataList);
-        List<ActionModel> actions = jsonWorker.parseActions();
+        IActionDao actionDao = new ActionDaoJson();
+        List<ActionModel> actions = actionDao.getAllActions();
         if (actions != null && !actions.isEmpty()) {
             actions = decorateActions(actions);
         }

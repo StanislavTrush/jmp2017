@@ -1,25 +1,42 @@
 package com.epam.jmp2017.util.workers;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBWorker {
+    private static final Logger LOG = Logger.getLogger(DBWorker.class.getName());
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3307/module6";
-
-    private static final String USER = "adminWB9xVIt";
-    private static final String PASS = "JeCJ3vHv4CNS";
     //rhc port-forward -a module6
     //https://module6-devrine.rhcloud.com/phpmyadmin/
 
-    public static void test() {
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        try{
-            Class.forName(JDBC_DRIVER);
+    private Connection conn = null;
+    private Statement stmt = null;
+    private ResultSet rs = null;
 
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+
+    protected void init() {
+        try
+        {
+            Class.forName(JDBC_DRIVER);
+        }
+        catch (ClassNotFoundException e)
+        {
+            LOG.log(Level.WARNING, e.getMessage(), e);
+        }
+    }
+
+
+
+    public void test() {
+        try{
+            System.out.println("Connecting to mysql...");
+            conn = DriverManager.getConnection(
+                  PropertyManager.getProperty("database.url"),
+                  PropertyManager.getProperty("database.user"),
+                  PropertyManager.getProperty("database.password")
+            );
 
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
