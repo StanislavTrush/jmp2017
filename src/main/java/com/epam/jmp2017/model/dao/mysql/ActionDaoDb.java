@@ -12,10 +12,20 @@ import com.epam.jmp2017.model.dao.IActionDao;
 import com.epam.jmp2017.model.dao.IConditionDao;
 import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.util.workers.PropertyManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+
+import javax.sql.DataSource;
 
 
 public class ActionDaoDb implements IActionDao
 {
+	@Autowired
+	private IConditionDao conditionDao;
+
+	@Autowired
+	private DataSource dataSource;
+
 	@Override
 	public List<ActionModel> getAllActions() {
 		List<ActionModel> actions = new ArrayList<>();
@@ -23,14 +33,9 @@ public class ActionDaoDb implements IActionDao
 		Statement stmt = null;
 		ResultSet rs = null;
 		ActionModel action;
-		IConditionDao conditionDao = new ConditionDaoDb();
 
 		try{
-			conn = DriverManager.getConnection(
-					PropertyManager.getProperty("database.url"),
-					PropertyManager.getProperty("database.user"),
-					PropertyManager.getProperty("database.password")
-			);
+			conn = DataSourceUtils.getConnection(dataSource);
 
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT id, name, type FROM Actions");
@@ -61,13 +66,7 @@ public class ActionDaoDb implements IActionDao
 			}catch(SQLException e){
 				e.printStackTrace();
 			}
-			try{
-				if(conn!=null) {
-					conn.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
+			DataSourceUtils.releaseConnection(conn, dataSource);
 		}
 		return actions;
 	}

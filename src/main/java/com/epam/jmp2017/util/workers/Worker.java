@@ -18,12 +18,14 @@ import com.epam.jmp2017.model.json.ResultModel;
 
 public class Worker {
     @Autowired
+    private IActionDao actionDao;
+
+    @Autowired
     private JsonWorker jsonWorker;
 
     public String getTaskResult(String dataString) throws IOException {
         List<DataModel> dataList = jsonWorker.parseData(dataString);
         sortDataByTypeCode(dataList);
-        IActionDao actionDao = new ActionDaoDb();
         List<ActionModel> actions = actionDao.getAllActions();
         if (actions != null && !actions.isEmpty()) {
             actions = decorateActions(actions);

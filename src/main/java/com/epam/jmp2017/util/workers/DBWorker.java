@@ -14,7 +14,7 @@ public class DBWorker {
     private Statement stmt = null;
     private ResultSet rs = null;
 
-    public void test() {
+    public void getC() {
         try{
             System.out.println("Connecting to mysql...");
             conn = DriverManager.getConnection(

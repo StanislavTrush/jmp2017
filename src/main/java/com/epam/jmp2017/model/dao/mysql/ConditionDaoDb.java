@@ -3,12 +3,18 @@ package com.epam.jmp2017.model.dao.mysql;
 import com.epam.jmp2017.model.dao.IConditionDao;
 import com.epam.jmp2017.model.json.ConditionModel;
 import com.epam.jmp2017.util.workers.PropertyManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConditionDaoDb implements IConditionDao {
+    @Autowired
+    private DataSource dataSource;
+
     @Override
     public List<ConditionModel> getConditionsForActionId(int actionId) {
         Connection conn = null;
@@ -16,15 +22,11 @@ public class ConditionDaoDb implements IConditionDao {
         ResultSet rs = null;
 
         try{
-            conn = DriverManager.getConnection(
-                    PropertyManager.getProperty("database.url"),
-                    PropertyManager.getProperty("database.user"),
-                    PropertyManager.getProperty("database.password")
-            );
+            conn = DataSourceUtils.getConnection(dataSource);
 
             stmt = conn.createStatement();
             rs = stmt.executeQuery(
-                    "SELECT id, actionId, parentId, operation, attribute, value, className FROM Conditions where actionId = "
+                    "SELECT id, actionId, parentId, operation, attribute, value, className FROM Conditions WHERE actionId = "
                             + actionId + " OR actionId IS NULL");
 
             return toModelList(getRoot(rs, actionId));
@@ -47,13 +49,7 @@ public class ConditionDaoDb implements IConditionDao {
             }catch(SQLException e){
                 e.printStackTrace();
             }
-            try{
-                if(conn!=null) {
-                    conn.close();
-                }
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+            DataSourceUtils.releaseConnection(conn, dataSource);
         }
         return new ArrayList<>();
     }
@@ -73,7 +69,9 @@ public class ConditionDaoDb implements IConditionDao {
             conditions.add(condition);
         }
         List<ConditionData> retult = new ArrayList<>();
-        for (ConditionData conditionData : conditions) {
+        List<ConditionData> temp = new ArrayList<>();
+        temp.addAll(conditions);
+        for (ConditionData conditionData : temp) {
             if (conditionData.getActionId() == actionId) {
                 conditionData.setConditions(toModelList(getChilds(conditions, conditionData.getId())));
                 conditions.add(conditionData);
