@@ -26,6 +26,7 @@ public class Worker {
     public String getTaskResult(String dataString) throws IOException {
         List<DataModel> dataList = dataDao.fromJson(dataString);
         sortDataByTypeCode(dataList);
+        dataDao.save(dataList);
         List<ActionModel> actions = actionDao.getAllActions();
         return getActionsResults(dataList, actions);
     }

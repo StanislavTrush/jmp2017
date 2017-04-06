@@ -14,7 +14,7 @@ import com.google.gson.stream.JsonReader;
 
 public interface IDataDto
 {
-	boolean save();
+	boolean save(List<DataModel> dataList);
 
 	default List<DataModel> fromJson(String dataString) {
 		List<DataModel> dataList = new ArrayList<>();

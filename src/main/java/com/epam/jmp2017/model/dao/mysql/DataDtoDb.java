@@ -5,9 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.epam.jmp2017.model.json.DataModel;
+import com.epam.jmp2017.model.json.impl.data.Dog;
+import com.epam.jmp2017.model.json.impl.data.Fridge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
@@ -19,33 +23,35 @@ public class DataDtoDb implements IDataDto
 	@Autowired
 	private DataSource dataSource;
 	@Override
-	public boolean save()
+	public boolean save(List<DataModel> dataList)
 	{
 		Connection conn = null;
 		Statement stmt = null;
-		ResultSet rs = null;
-
 		try{
 			conn = DataSourceUtils.getConnection(dataSource);
 
+			Dog dog;
+			Fridge fridge;
 			stmt = conn.createStatement();
-			rs = stmt.executeUpdate(
-					"SELECT id, actionId, parentId, operation, attribute, value, className FROM Conditions WHERE actionId = "
-							+ actionId + " OR actionId IS NULL");
-
-			return toModelList(getRoot(rs, actionId));
+			for (DataModel data : dataList) {
+				if (data.getTypeCode() == 1) {
+					dog = (Dog) data;
+					stmt.addBatch("INSERT IGNORE INTO Dogs (name, color)" +
+							" VALUES('" + dog.getName() + "', '" + dog.getColor() + "')");
+				}
+				if (data.getTypeCode() == 2) {
+					fridge = (Fridge) data;
+					stmt.addBatch("INSERT IGNORE INTO Fridges (weight, brand)" +
+							" VALUES('" + fridge.getWeight() + "', '" + fridge.getBrand() + "')");
+				}
+			}
+			stmt.executeBatch();
+			return true;
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-			} catch(SQLException e) {
-				e.printStackTrace();
-			}
 			try{
 				if(stmt!=null) {
 					stmt.close();
@@ -55,6 +61,6 @@ public class DataDtoDb implements IDataDto
 			}
 			DataSourceUtils.releaseConnection(conn, dataSource);
 		}
-		return new ArrayList<>();
+		return false;
 	}
 }

@@ -73,7 +73,7 @@ public class ConditionDaoDb implements IConditionDao {
         for (ConditionData conditionData : temp) {
             if (conditionData.getActionId() == actionId) {
                 conditionData.setConditions(toModelList(getChilds(conditions, conditionData.getId())));
-                conditions.add(conditionData);
+                retult.add(conditionData);
             }
         }
 
