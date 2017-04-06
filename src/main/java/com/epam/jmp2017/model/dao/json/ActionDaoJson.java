@@ -49,6 +49,6 @@ public class ActionDaoJson implements IActionDao
 				e.printStackTrace();
 			}
 		}
-		return actions;
+		return decorateActions(actions);
 	}
 }

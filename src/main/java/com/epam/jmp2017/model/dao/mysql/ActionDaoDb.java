@@ -68,6 +68,6 @@ public class ActionDaoDb implements IActionDao
 			}
 			DataSourceUtils.releaseConnection(conn, dataSource);
 		}
-		return actions;
+		return decorateActions(actions);
 	}
 }

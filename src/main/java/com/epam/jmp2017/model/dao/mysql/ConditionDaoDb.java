@@ -2,7 +2,6 @@ package com.epam.jmp2017.model.dao.mysql;
 
 import com.epam.jmp2017.model.dao.IConditionDao;
 import com.epam.jmp2017.model.json.ConditionModel;
-import com.epam.jmp2017.util.workers.PropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 

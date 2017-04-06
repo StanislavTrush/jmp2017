@@ -34,6 +34,8 @@
 
     <bean id="jsonWorker" class="com.epam.jmp2017.util.workers.JsonWorker" />
 
+    <bean id="dataDao" class="com.epam.jmp2017.model.dao.mysql.DataDtoDb" />
+
     <bean id="actionDao" class="com.epam.jmp2017.model.dao.mysql.ActionDaoDb" />
 
     <bean id="conditionDao" class="com.epam.jmp2017.model.dao.mysql.ConditionDaoDb" />
@@ -41,8 +43,8 @@
     <util:map id="dbProps">
         <entry key="db.driver" value="com.mysql.jdbc.Driver"/>
         <entry key="db.jdbcurl" value="jdbc:mysql://127.0.0.1:3306/module6"/>
-        <entry key="db.username" value="adminWB9xVIt"/>
-        <entry key="db.password" value="JeCJ3vHv4CNS"/>
+        <entry key="db.username" value="adminlRFJLIF"/>
+        <entry key="db.password" value="CHYElZ9GIIk5"/>
     </util:map>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

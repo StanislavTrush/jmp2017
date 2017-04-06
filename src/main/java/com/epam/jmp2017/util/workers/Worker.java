@@ -5,13 +5,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.epam.jmp2017.model.dao.mysql.ActionDaoDb;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.epam.jmp2017.model.dao.IActionDao;
-import com.epam.jmp2017.model.dao.json.ActionDaoJson;
-import com.epam.jmp2017.model.decorators.CheckingActionDecorator;
-import com.epam.jmp2017.model.decorators.LoggingActionDecorator;
+import com.epam.jmp2017.model.dao.IDataDto;
 import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.model.json.ResultModel;
@@ -21,15 +18,15 @@ public class Worker {
     private IActionDao actionDao;
 
     @Autowired
+    private IDataDto dataDao;
+
+    @Autowired
     private JsonWorker jsonWorker;
 
     public String getTaskResult(String dataString) throws IOException {
-        List<DataModel> dataList = jsonWorker.parseData(dataString);
+        List<DataModel> dataList = dataDao.fromJson(dataString);
         sortDataByTypeCode(dataList);
         List<ActionModel> actions = actionDao.getAllActions();
-        if (actions != null && !actions.isEmpty()) {
-            actions = decorateActions(actions);
-        }
         return getActionsResults(dataList, actions);
     }
 
@@ -56,25 +53,6 @@ public class Worker {
             return new ResultModel(data.getTypeCode(), resultString);
         }
         return null;
-    }
-
-    public List<ActionModel> decorateActions(List<ActionModel> actions) {
-        boolean isLog = Boolean.parseBoolean(PropertyManager.getProperty("actions.log"));
-        boolean isCheck = Boolean.parseBoolean(PropertyManager.getProperty("actions.check"));
-        List<ActionModel> result = new ArrayList<>();
-
-        actions.forEach((action) -> {
-            ActionModel temp = action;
-            if (isLog) {
-                temp = new LoggingActionDecorator(temp);
-            }
-            if (isCheck) {
-                temp = new CheckingActionDecorator(temp);
-            }
-            result.add(temp);
-        });
-
-        return result;
     }
 
     public void sortDataByTypeCode(List<DataModel> dataList) {

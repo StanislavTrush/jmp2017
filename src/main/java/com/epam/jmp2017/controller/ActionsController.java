@@ -2,6 +2,7 @@ package com.epam.jmp2017.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,27 +11,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.constants.WebConstants;
-import com.epam.jmp2017.util.loaders.ConditionsLoader;
+import com.epam.jmp2017.model.dao.IActionDao;
+import com.epam.jmp2017.model.dao.IDataDto;
+import com.epam.jmp2017.model.json.DataModel;
+import com.epam.jmp2017.util.workers.JsonWorker;
 import com.epam.jmp2017.util.workers.Worker;
 
-//YAGNI
-//Not overriding all the methods with different implementations
-@WebServlet(WebConstants.URL_PROCESS)
-public class MainController extends HttpServlet {
+
+@WebServlet(WebConstants.URL_ACTIONS)
+public class ActionsController extends HttpServlet
+{
 	@Autowired
 	private Worker worker;
 
 	@Autowired
-	@Qualifier("loader")
-	private ConditionsLoader conditionsLoader;
+	private JsonWorker jsonWorker;
+
+	@Autowired
+	private IDataDto dataDao;
+
+	@Autowired
+	private IActionDao actionDao;
 
 	@Override
-	public void init() throws ServletException {
+	public void init() throws ServletException
+	{
 		super.init();
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, getServletContext());
 	}
@@ -51,6 +60,10 @@ public class MainController extends HttpServlet {
 		response.setContentType(WebConstants.TYPE_CONTENT);
 
 		PrintWriter out = response.getWriter();
-		out.print(worker.getTaskResult(request.getParameter(BaseConstants.ATTR_DATA)));
+
+		List<DataModel> dataList = dataDao.fromJson(request.getParameter(BaseConstants.ATTR_DATA));
+		worker.sortDataByTypeCode(dataList);
+
+		out.print(jsonWorker.toJson(actionDao.getAvailableActions(dataList, actionDao.getAllActions())));
 	}
 }
