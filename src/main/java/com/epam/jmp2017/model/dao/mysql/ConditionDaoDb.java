@@ -17,35 +17,35 @@ public class ConditionDaoDb implements IConditionDao {
     @Override
     public List<ConditionModel> getConditionsForActionId(int actionId) {
         Connection conn = null;
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        try{
+        try {
             conn = DataSourceUtils.getConnection(dataSource);
 
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(
-                    "SELECT id, actionId, parentId, operation, attribute, value, className FROM Conditions WHERE actionId = "
-                            + actionId + " OR actionId IS NULL");
+            stmt = conn.prepareStatement(
+                    "SELECT id, actionId, parentId, operation, attribute, value, className FROM Conditions WHERE actionId = ? OR actionId IS NULL");
+            stmt.setInt(1, actionId);
+            rs = stmt.executeQuery();
 
             return toModelList(getRoot(rs, actionId));
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                if(rs != null) {
+                if (rs != null) {
                     rs.close();
                 }
-            } catch(SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
-            try{
-                if(stmt!=null) {
+            try {
+                if (stmt != null) {
                     stmt.close();
                 }
-            }catch(SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             DataSourceUtils.releaseConnection(conn, dataSource);
@@ -78,9 +78,9 @@ public class ConditionDaoDb implements IConditionDao {
         }
 
 
-
         return retult;
     }
+
     private List<ConditionData> getChilds(List<ConditionData> conditions, int parentId) {
         List<ConditionData> result = new ArrayList<>();
         for (ConditionData conditionData : conditions) {

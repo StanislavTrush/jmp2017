@@ -22,35 +22,34 @@ import com.epam.jmp2017.util.workers.Worker;
 //Not overriding all the methods with different implementations
 @WebServlet(WebConstants.URL_PROCESS)
 public class MainController extends HttpServlet {
-	@Autowired
-	private Worker worker;
+    @Autowired
+    private Worker worker;
 
-	@Autowired
-	@Qualifier("loader")
-	private ConditionsLoader conditionsLoader;
+    @Autowired
+    @Qualifier("loader")
+    private ConditionsLoader conditionsLoader;
 
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, getServletContext());
-	}
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, getServletContext());
+    }
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-		process(request, response);
-	}
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        process(request, response);
+    }
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		process(request, response);
-	}
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        process(request, response);
+    }
 
-	//DRY
-	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType(WebConstants.TYPE_CONTENT);
+    //DRY
+    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType(WebConstants.TYPE_CONTENT);
 
-		PrintWriter out = response.getWriter();
-		out.print(worker.getTaskResult(request.getParameter(BaseConstants.ATTR_DATA)));
-	}
+        PrintWriter out = response.getWriter();
+        out.print(worker.getTaskResult(request.getParameter(BaseConstants.ATTR_DATA)));
+    }
 }

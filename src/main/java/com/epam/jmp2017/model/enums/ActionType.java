@@ -9,6 +9,7 @@ public enum ActionType {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -19,7 +20,7 @@ public enum ActionType {
 
     public static ActionType getValue(String type) {
         ActionType result = null;
-        if(type != null) {
+        if (type != null) {
             for (ActionType actionType : values()) {
                 if (actionType.getName().equalsIgnoreCase(type)) {
                     result = actionType;

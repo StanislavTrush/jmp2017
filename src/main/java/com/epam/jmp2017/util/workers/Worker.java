@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.epam.jmp2017.model.dao.IActionDao;
-import com.epam.jmp2017.model.dao.IDataDto;
+import com.epam.jmp2017.model.dao.IDataDao;
 import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.model.json.ResultModel;
@@ -18,10 +19,7 @@ public class Worker {
     private IActionDao actionDao;
 
     @Autowired
-    private IDataDto dataDao;
-
-    @Autowired
-    private JsonWorker jsonWorker;
+    private IDataDao dataDao;
 
     public String getTaskResult(String dataString) throws IOException {
         List<DataModel> dataList = dataDao.fromJson(dataString);
@@ -43,7 +41,7 @@ public class Worker {
                 }
             }
         }
-        return jsonWorker.toJson(results);
+        return new Gson().toJson(results);
     }
 
     //DRY

@@ -11,7 +11,7 @@ public class DogFactory extends BaseDataFactory {
     public DataModel getData(JsonElement element) {
         JsonObject object = element.getAsJsonObject();
         JsonElement jsonDog = object.get("dog");
-        if(jsonDog != null) {
+        if (jsonDog != null) {
             return new Gson().fromJson(jsonDog, Dog.class);
         } else {
             return null;

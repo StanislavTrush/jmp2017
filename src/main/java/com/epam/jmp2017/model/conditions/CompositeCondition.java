@@ -33,12 +33,15 @@ public class CompositeCondition implements Condition {
     public List<ConditionModel> getConditions() {
         return conditions;
     }
+
     public void setConditions(List<ConditionModel> conditions) {
         this.conditions = conditions;
     }
+
     public String getOperation() {
         return operation;
     }
+
     public void setOperation(String operation) {
         this.operation = operation;
     }

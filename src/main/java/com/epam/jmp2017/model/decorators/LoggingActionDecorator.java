@@ -11,39 +11,35 @@ import com.epam.jmp2017.model.json.DataModel;
 
 import javax.enterprise.inject.Model;
 
-public class LoggingActionDecorator extends BaseActionDecorator
-{
-	private static Logger LOG = null;
+public class LoggingActionDecorator extends BaseActionDecorator {
+    private static Logger LOG = null;
 
-	public LoggingActionDecorator(ActionModel decorated)
-	{
-		super(decorated);
-		if (LOG == null) {
-			synchronized (LoggingActionDecorator.class) {
-				if (LOG == null) {
-					FileHandler fh;
-					SimpleFormatter formatter = new SimpleFormatter();
-					LOG = Logger.getLogger(LoggingActionDecorator.class.getName());
-					try {
-						fh = new FileHandler("C://jmp.log", true);
-						LOG.addHandler(fh);
-						fh.setFormatter(formatter);
-					} catch (SecurityException | IOException e) {
-						LOG.log(Level.SEVERE, e.getMessage(), e);
-					}
-				}
-			}
-		}
-	}
+    public LoggingActionDecorator(ActionModel decorated) {
+        super(decorated);
+        if (LOG == null) {
+            synchronized (LoggingActionDecorator.class) {
+                if (LOG == null) {
+                    FileHandler fh;
+                    SimpleFormatter formatter = new SimpleFormatter();
+                    LOG = Logger.getLogger(LoggingActionDecorator.class.getName());
+                    try {
+                        fh = new FileHandler("C://jmp.log", true);
+                        LOG.addHandler(fh);
+                        fh.setFormatter(formatter);
+                    } catch (SecurityException | IOException e) {
+                        LOG.log(Level.SEVERE, e.getMessage(), e);
+                    }
+                }
+            }
+        }
+    }
 
-	@Override
-	public String perform(DataModel data)
-	{
-		final String result = super.perform(data);
-		if (result != null)
-		{
-			LOG.info(data.print());
-		}
-		return result;
-	}
+    @Override
+    public String perform(DataModel data) {
+        final String result = super.perform(data);
+        if (result != null) {
+            LOG.info(data.print());
+        }
+        return result;
+    }
 }

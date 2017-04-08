@@ -7,12 +7,15 @@ public class ResultModel {
     public int getTypeCode() {
         return typeCode;
     }
+
     public void setTypeCode(int typeCode) {
         this.typeCode = typeCode;
     }
+
     public String getResult() {
         return result;
     }
+
     public void setResult(String result) {
         this.result = result;
     }

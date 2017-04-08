@@ -11,7 +11,7 @@ public class FridgeFactory extends BaseDataFactory {
     public DataModel getData(JsonElement element) {
         JsonObject object = element.getAsJsonObject();
         JsonElement jsonFridge = object.get("fridge");
-        if(jsonFridge != null) {
+        if (jsonFridge != null) {
             return new Gson().fromJson(jsonFridge, Fridge.class);
         } else {
             return null;

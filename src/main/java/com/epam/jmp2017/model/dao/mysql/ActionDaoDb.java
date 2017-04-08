@@ -18,56 +18,55 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import javax.sql.DataSource;
 
 
-public class ActionDaoDb implements IActionDao
-{
-	@Autowired
-	private IConditionDao conditionDao;
+public class ActionDaoDb implements IActionDao {
+    @Autowired
+    private IConditionDao conditionDao;
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-	@Override
-	public List<ActionModel> getAllActions() {
-		List<ActionModel> actions = new ArrayList<>();
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		ActionModel action;
+    @Override
+    public List<ActionModel> getAllActions() {
+        List<ActionModel> actions = new ArrayList<>();
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        ActionModel action;
 
-		try{
-			conn = DataSourceUtils.getConnection(dataSource);
+        try {
+            conn = DataSourceUtils.getConnection(dataSource);
 
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT id, name, type FROM Actions");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT id, name, type FROM Actions");
 
-			while(rs.next()){
-				action = new ActionModel();
-				action.setName(rs.getString("name"));
-				action.setType(rs.getString("type"));
-				action.setConditions(conditionDao.getConditionsForActionId(rs.getInt("id")));
-				actions.add(action);
-			}
-		}catch(SQLException e){
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-			} catch(SQLException e) {
-				e.printStackTrace();
-			}
-			try{
-				if(stmt!=null) {
-					stmt.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			DataSourceUtils.releaseConnection(conn, dataSource);
-		}
-		return decorateActions(actions);
-	}
+            while (rs.next()) {
+                action = new ActionModel();
+                action.setName(rs.getString("name"));
+                action.setType(rs.getString("type"));
+                action.setConditions(conditionDao.getConditionsForActionId(rs.getInt("id")));
+                actions.add(action);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            DataSourceUtils.releaseConnection(conn, dataSource);
+        }
+        return decorateActions(actions);
+    }
 }

@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `Dogs` (
 
 CREATE TABLE IF NOT EXISTS `Fridges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `weight` varchar(100) DEFAULT NULL,
+  `weight` int(11) DEFAULT NULL,
   `brand` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQUE_FRIDGE` (`weight`,`brand`)

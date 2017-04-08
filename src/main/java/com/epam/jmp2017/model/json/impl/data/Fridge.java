@@ -17,12 +17,15 @@ public class Fridge implements DataModel {
     public int getWeight() {
         return weight;
     }
+
     public void setWeight(int weight) {
         this.weight = weight;
     }
+
     public String getBrand() {
         return brand;
     }
+
     public void setBrand(String brand) {
         this.brand = brand;
     }
@@ -31,13 +34,14 @@ public class Fridge implements DataModel {
     public int getTypeCode() {
         return 2;
     }
+
     public String print() {
         return "This fridge from " + brand + " weight " + weight + " kg.";
     }
 
     @Override
     public String get(Attribute attribute) {
-        if(attribute != null) {
+        if (attribute != null) {
             switch (attribute) {
                 case BRAND:
                     return brand;
