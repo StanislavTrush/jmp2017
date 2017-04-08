@@ -10,6 +10,7 @@ public enum Attribute {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -20,7 +21,7 @@ public enum Attribute {
 
     public static Attribute getValue(String type) {
         Attribute result = null;
-        if(type != null) {
+        if (type != null) {
             for (Attribute actionType : values()) {
                 if (actionType.getName().equalsIgnoreCase(type)) {
                     result = actionType;

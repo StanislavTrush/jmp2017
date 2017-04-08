@@ -1,34 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
     <context:spring-configured/>
-    <context:annotation-config />
+    <context:annotation-config/>
     <context:load-time-weaver/>
 
     <bean id="mainController" class="com.epam.jmp2017.controller.MainController"/>
 
-    <alias name="conditionsLoader" alias="loader" />
+    <alias name="conditionsLoader" alias="loader"/>
     <bean id="conditionsLoader" class="com.epam.jmp2017.util.loaders.ConditionsLoader" init-method="cacheConditions"
           scope="singleton">
         <property name="path" value="D:/Programing/Workspace/Repositories/jmp2017/conditions/"/>
     </bean>
 
-    <bean id="actionModel" class="com.epam.jmp2017.model.json.ActionModel" />
+    <bean id="actionModel" class="com.epam.jmp2017.model.json.ActionModel"/>
 
-    <bean id="compositeCondition" class="com.epam.jmp2017.model.conditions.CompositeCondition" />
+    <bean id="compositeCondition" class="com.epam.jmp2017.model.conditions.CompositeCondition"/>
 
-    <bean id="equalsCondition" parent="compositeCondition" />
+    <bean id="equalsCondition" parent="compositeCondition"/>
 
-    <bean id="lengthCondition" parent="compositeCondition" />
+    <bean id="lengthCondition" parent="compositeCondition"/>
 
-    <bean id="worker" class="com.epam.jmp2017.util.workers.Worker" lazy-init="true" />
+    <bean id="worker" class="com.epam.jmp2017.util.workers.Worker" lazy-init="true"/>
 
-    <bean id="jsonWorker" class="com.epam.jmp2017.util.workers.JsonWorker" />
+    <bean id="dataDao" class="com.epam.jmp2017.model.dao.mysql.DataDaoDb"/>
+
+    <bean id="actionDao" class="com.epam.jmp2017.model.dao.mysql.ActionDaoDb"/>
+
+    <bean id="conditionDao" class="com.epam.jmp2017.model.dao.mysql.ConditionDaoDb"/>
+
+    <util:map id="dbProps">
+        <entry key="db.driver" value="com.mysql.jdbc.Driver"/>
+        <entry key="db.jdbcurl" value="jdbc:mysql://127.0.0.1:3306/module6"/>
+        <entry key="db.username" value="adminlRFJLIF"/>
+        <entry key="db.password" value="CHYElZ9GIIk5"/>
+    </util:map>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="url" value="${db.jdbcurl}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="properties" ref="dbProps"/>
+    </bean>
 
 </beans>

@@ -5,24 +5,27 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.epam.jmp2017.model.decorators.CheckingActionDecorator;
-import com.epam.jmp2017.model.decorators.LoggingActionDecorator;
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.epam.jmp2017.model.dao.IActionDao;
+import com.epam.jmp2017.model.dao.IDataDao;
 import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.model.json.ResultModel;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class Worker {
     @Autowired
-    private JsonWorker jsonWorker;
+    private IActionDao actionDao;
+
+    @Autowired
+    private IDataDao dataDao;
 
     public String getTaskResult(String dataString) throws IOException {
-        List<DataModel> dataList = jsonWorker.parseData(dataString);
+        List<DataModel> dataList = dataDao.fromJson(dataString);
         sortDataByTypeCode(dataList);
-        List<ActionModel> actions = jsonWorker.parseActions();
-        if (actions != null && !actions.isEmpty()) {
-            actions = decorateActions(actions);
-        }
+        dataDao.save(dataList);
+        List<ActionModel> actions = actionDao.getAllActions();
         return getActionsResults(dataList, actions);
     }
 
@@ -38,7 +41,7 @@ public class Worker {
                 }
             }
         }
-        return jsonWorker.toJson(results);
+        return new Gson().toJson(results);
     }
 
     //DRY
@@ -49,25 +52,6 @@ public class Worker {
             return new ResultModel(data.getTypeCode(), resultString);
         }
         return null;
-    }
-
-    public List<ActionModel> decorateActions(List<ActionModel> actions) {
-        boolean isLog = Boolean.parseBoolean(PropertyManager.getProperty("actions.log"));
-        boolean isCheck = Boolean.parseBoolean(PropertyManager.getProperty("actions.check"));
-        List<ActionModel> result = new ArrayList<>();
-
-        actions.forEach((action) -> {
-            ActionModel temp = action;
-            if (isLog) {
-                temp = new LoggingActionDecorator(temp);
-            }
-            if (isCheck) {
-                temp = new CheckingActionDecorator(temp);
-            }
-            result.add(temp);
-        });
-
-        return result;
     }
 
     public void sortDataByTypeCode(List<DataModel> dataList) {

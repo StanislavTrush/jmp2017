@@ -12,32 +12,44 @@ public class ConditionModel {
     public List<ConditionModel> getConditions() {
         return conditions;
     }
+
     public void setConditions(List<ConditionModel> conditions) {
         this.conditions = conditions;
     }
+
     public String getOperation() {
         return operation;
     }
+
     public void setOperation(String operation) {
         this.operation = operation;
     }
+
     public String getAttribute() {
         return attribute;
     }
+
     public void setAttribute(String attribute) {
         this.attribute = attribute;
     }
+
     public String getValue() {
         return value;
     }
+
     public void setValue(String value) {
         this.value = value;
     }
+
     public String getClassName() {
         return className;
     }
+
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public ConditionModel() {
     }
 
     public ConditionModel(List<ConditionModel> conditions, String operation, String attribute, String value, String className) {

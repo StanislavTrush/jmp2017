@@ -12,6 +12,7 @@ public @interface ConditionDescription {
      * Parameter labels.
      */
     String[] parameters();
+
     /**
      * Method description.
      */

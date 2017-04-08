@@ -17,12 +17,15 @@ public class Dog implements DataModel {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getColor() {
         return color;
     }
+
     public void setColor(String color) {
         this.color = color;
     }
@@ -31,6 +34,7 @@ public class Dog implements DataModel {
     public int getTypeCode() {
         return 1;
     }
+
     @Override
     public String print() {
         return "Color of the dog called " + name + " is " + color + ".";
@@ -38,7 +42,7 @@ public class Dog implements DataModel {
 
     @Override
     public String get(Attribute attribute) {
-        if(attribute != null) {
+        if (attribute != null) {
             switch (attribute) {
                 case NAME:
                     return name;

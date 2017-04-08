@@ -37,6 +37,7 @@ public class ConditionsLoader extends ClassLoader {
     public String getPath() {
         return path;
     }
+
     @Required
     public void setPath(String path) {
         this.path = path;
@@ -105,7 +106,7 @@ public class ConditionsLoader extends ClassLoader {
         try {
             result = loadClass(className);
             if (result != null &&
-                  (!CompositeCondition.class.isAssignableFrom(result) || !result.isAnnotationPresent(ConditionDisplayName.class))) {
+                    (!CompositeCondition.class.isAssignableFrom(result) || !result.isAnnotationPresent(ConditionDisplayName.class))) {
                 result = null;
             }
 
