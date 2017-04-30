@@ -4,12 +4,14 @@ import com.epam.jmp2017.model.dao.IConditionDao;
 import com.epam.jmp2017.model.json.ConditionModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class ConditionDaoDb implements IConditionDao {
     @Autowired
     private DataSource dataSource;
