@@ -14,8 +14,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class ActionDaoJson implements IActionDao {
     @Override
     public List<ActionModel> getAllActions() {

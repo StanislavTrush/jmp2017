@@ -1,17 +1,11 @@
 package com.epam.jmp2017.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.epam.jmp2017.model.json.ResultModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import org.springframework.web.bind.annotation.*;
 
 import com.epam.jmp2017.constants.BaseConstants;
 import com.epam.jmp2017.constants.WebConstants;
@@ -20,8 +14,9 @@ import com.epam.jmp2017.util.workers.Worker;
 
 //YAGNI
 //Not overriding all the methods with different implementations
-@WebServlet(WebConstants.URL_PROCESS)
-public class MainController extends HttpServlet {
+@RestController
+@RequestMapping(WebConstants.URL_PROCESS)
+public class MainController {
     @Autowired
     private Worker worker;
 
@@ -29,27 +24,18 @@ public class MainController extends HttpServlet {
     @Qualifier("loader")
     private ConditionsLoader conditionsLoader;
 
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, getServletContext());
+    @PostMapping
+    public List<ResultModel> doPost(@RequestParam(BaseConstants.ATTR_DATA) String data) {
+        return process(data);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        process(request, response);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        process(request, response);
+    @GetMapping
+    public List<ResultModel> doGet(@RequestParam(BaseConstants.ATTR_DATA) String data) {
+        return process(data);
     }
 
     //DRY
-    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType(WebConstants.TYPE_CONTENT);
-
-        PrintWriter out = response.getWriter();
-        out.print(worker.getTaskResult(request.getParameter(BaseConstants.ATTR_DATA)));
+    private List<ResultModel> process(String data) {
+        return worker.getTaskResult(data);
     }
 }

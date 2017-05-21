@@ -14,10 +14,11 @@ import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.util.workers.PropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 
-
+@Repository
 public class ActionDaoDb implements IActionDao {
     @Autowired
     private IConditionDao conditionDao;

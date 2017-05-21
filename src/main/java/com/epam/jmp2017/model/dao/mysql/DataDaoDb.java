@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import com.epam.jmp2017.model.dao.IDataDao;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class DataDaoDb implements IDataDao {
     @Autowired
     private DataSource dataSource;

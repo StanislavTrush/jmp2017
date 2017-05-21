@@ -8,8 +8,8 @@
 4. **_Architecture: Structural Patterns_**
 5. **_Backend: Spring Core Basics_**
 6. **_Infrastructure: JDBC  Advanced Techniques (+ Spring JDBC)_**
-7. Infrastructure: Continuous Integration Concepts (Jenkins)
-8. Backend: Spring MVC
+7. **_Infrastructure: Continuous Integration Concepts (Jenkins)_**
+8. **_Backend: Spring MVC_**
 9. Infrastructure: Unit testing
 10. Lambdas & Streams (Java 8)
 11. Backend: Multithreading: Classic Model and Concurrency

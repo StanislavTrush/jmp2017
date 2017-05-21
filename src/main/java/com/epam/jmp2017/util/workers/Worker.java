@@ -1,11 +1,9 @@
 package com.epam.jmp2017.util.workers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.epam.jmp2017.model.dao.IActionDao;
@@ -13,23 +11,27 @@ import com.epam.jmp2017.model.dao.IDataDao;
 import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.model.json.ResultModel;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 
+@Lazy
+@Service
 public class Worker {
     @Autowired
-    private IActionDao actionDao;
+    private IActionDao actionDaoDb;
 
     @Autowired
-    private IDataDao dataDao;
+    private IDataDao dataDaoDb;
 
-    public String getTaskResult(String dataString) throws IOException {
-        List<DataModel> dataList = dataDao.fromJson(dataString);
+    public List<ResultModel> getTaskResult(String dataString) {
+        List<DataModel> dataList = dataDaoDb.fromJson(dataString);
         sortDataByTypeCode(dataList);
-        dataDao.save(dataList);
-        List<ActionModel> actions = actionDao.getAllActions();
+        dataDaoDb.save(dataList);
+        List<ActionModel> actions = actionDaoDb.getAllActions();
         return getActionsResults(dataList, actions);
     }
 
-    public String getActionsResults(List<DataModel> dataList, List<ActionModel> actions) throws IOException {
+    public List<ResultModel> getActionsResults(List<DataModel> dataList, List<ActionModel> actions) {
         List<ResultModel> results = new ArrayList<>();
         ResultModel result;
 
@@ -41,7 +43,7 @@ public class Worker {
                 }
             }
         }
-        return new Gson().toJson(results);
+        return results;
     }
 
     //DRY

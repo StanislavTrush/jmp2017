@@ -1,6 +1,5 @@
 package com.epam.jmp2017.model.dao;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +38,8 @@ public interface IActionDao {
      * @param dataList - list of data items
      * @param actions  - list of actions
      * @return
-     * @throws IOException
      */
-    default List<ActionModel> getAvailableActions(List<DataModel> dataList, List<ActionModel> actions) throws IOException {
+    default List<ActionModel> getAvailableActions(List<DataModel> dataList, List<ActionModel> actions) {
         List<ActionModel> availableActions = new ArrayList<>();
         for (ActionModel action : actions) {
             for (DataModel data : dataList) {
