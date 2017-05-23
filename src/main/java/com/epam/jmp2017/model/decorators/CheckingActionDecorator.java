@@ -3,8 +3,6 @@ package com.epam.jmp2017.model.decorators;
 import com.epam.jmp2017.model.json.ActionModel;
 import com.epam.jmp2017.model.json.DataModel;
 
-import javax.enterprise.inject.Model;
-
 public class CheckingActionDecorator extends BaseActionDecorator {
     public CheckingActionDecorator(ActionModel decorated) {
         super(decorated);

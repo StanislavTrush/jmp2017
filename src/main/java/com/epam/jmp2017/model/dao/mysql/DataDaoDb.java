@@ -1,6 +1,7 @@
 package com.epam.jmp2017.model.dao.mysql;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -70,5 +71,49 @@ public class DataDaoDb implements IDataDao {
             DataSourceUtils.releaseConnection(conn, dataSource);
         }
         return false;
+    }
+
+    @Override
+    public List<DataModel> getAllData() {
+        Connection conn = null;
+        PreparedStatement stmtDogs = null;
+        PreparedStatement stmtFridges = null;
+        try {
+            conn = DataSourceUtils.getConnection(dataSource);
+
+            List<DataModel> result = new ArrayList<>();
+            stmtDogs = conn.prepareStatement("SELECT name, color FROM Dogs");
+            stmtFridges = conn.prepareStatement("SELECT weight, brand FROM Fridges");
+            ResultSet rs = stmtDogs.executeQuery();
+            while (rs.next()) {
+                result.add(new Dog(rs.getString("name"), rs.getString("color")));
+            }
+            rs = stmtFridges.executeQuery();
+            while (rs.next()) {
+                result.add(new Fridge(rs.getInt("weight"), rs.getString("brand")));
+            }
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmtDogs != null) {
+                    stmtDogs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (stmtFridges != null) {
+                    stmtFridges.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            DataSourceUtils.releaseConnection(conn, dataSource);
+        }
+        return new ArrayList<>();
     }
 }
