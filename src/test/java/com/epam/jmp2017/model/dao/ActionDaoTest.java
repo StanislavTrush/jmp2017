@@ -1,11 +1,8 @@
 package com.epam.jmp2017.model.dao;
 
-import com.epam.jmp2017.model.decorators.BaseActionDecorator;
-import com.epam.jmp2017.model.decorators.CheckingActionDecorator;
-import com.epam.jmp2017.model.decorators.LoggingActionDecorator;
-import com.epam.jmp2017.model.enums.ActionType;
-import com.epam.jmp2017.model.json.ActionModel;
-import com.epam.jmp2017.util.workers.PropertyManager;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.epam.jmp2017.model.decorators.BaseActionDecorator;
+import com.epam.jmp2017.model.decorators.CheckingActionDecorator;
+import com.epam.jmp2017.model.decorators.LoggingActionDecorator;
+import com.epam.jmp2017.model.enums.ActionType;
+import com.epam.jmp2017.model.json.ActionModel;
+import com.epam.jmp2017.util.workers.PropertyManager;
 
 
 @ContextConfiguration(locations = "classpath:test-context.xml")
