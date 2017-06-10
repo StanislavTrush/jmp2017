@@ -13,6 +13,7 @@ import com.google.gson.stream.JsonReader;
 
 
 public interface IDataDao {
+    List<DataModel> getAllData();
     boolean save(List<DataModel> dataList);
 
     default List<DataModel> fromJson(String dataString) {

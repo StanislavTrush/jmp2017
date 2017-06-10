@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd
-        http://www.springframework.org/schema/beans
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.3.xsd
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
-    <context:component-scan base-package="com.epam.jmp2017"/>
     <context:spring-configured/>
-    <context:load-time-weaver/>
-    <mvc:annotation-driven>
-        <mvc:message-converters>
-            <bean class="org.springframework.http.converter.json.GsonHttpMessageConverter"/>
-        </mvc:message-converters>
-    </mvc:annotation-driven>
+    <context:annotation-config/>
+
+    <bean id="mainController" class="com.epam.jmp2017.controller.MainController"/>
 
     <alias name="conditionsLoader" alias="loader"/>
     <bean id="conditionsLoader" class="com.epam.jmp2017.util.loaders.ConditionsLoader" init-method="cacheConditions"
@@ -35,6 +28,14 @@
     <bean id="equalsCondition" parent="compositeCondition"/>
 
     <bean id="lengthCondition" parent="compositeCondition"/>
+
+    <bean id="worker" class="com.epam.jmp2017.util.workers.Worker" lazy-init="true"/>
+
+    <bean id="dataDao" class="com.epam.jmp2017.model.dao.mysql.DataDaoDb"/>
+
+    <bean id="actionDao" class="com.epam.jmp2017.model.dao.mysql.ActionDaoDb"/>
+
+    <bean id="conditionDao" class="com.epam.jmp2017.model.dao.mysql.ConditionDaoDb"/>
 
     <util:map id="dbProps">
         <entry key="db.driver" value="com.mysql.jdbc.Driver"/>
@@ -52,5 +53,9 @@
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="properties" ref="dbProps"/>
+    </bean>
+
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 </beans>

@@ -45,6 +45,8 @@ public class Fridge implements DataModel {
             switch (attribute) {
                 case BRAND:
                     return brand;
+                default:
+                    return null;
             }
         }
         return null;

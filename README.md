@@ -10,7 +10,7 @@
 6. **_Infrastructure: JDBC  Advanced Techniques (+ Spring JDBC)_**
 7. **_Infrastructure: Continuous Integration Concepts (Jenkins)_**
 8. **_Backend: Spring MVC_**
-9. Infrastructure: Unit testing
+9. **_Infrastructure: Unit testing_**
 10. Lambdas & Streams (Java 8)
 11. Backend: Multithreading: Classic Model and Concurrency
 12. Backend: Memory Management and Garbage Collection

@@ -48,6 +48,8 @@ public class Dog implements DataModel {
                     return name;
                 case COLOR:
                     return color;
+                default:
+                    return null;
             }
         }
         return null;
