@@ -56,20 +56,20 @@ public class DataDaoTest {
 
         List<DataModel> data = dataDaoDb.getAllData();
         Assert.assertNotNull(data);
-        boolean isOk1 = false;
-        boolean isOk2 = false;
+        boolean isDogSaved = false;
+        boolean isFridgeSaved = false;
 
         for (DataModel dataModel : data) {
             if ("Doge".equals(dataModel.get(Attribute.NAME)) && "Orange".equals(dataModel.get(Attribute.COLOR))) {
-                isOk1 = true;
+                isDogSaved = true;
             }
             if (dataModel instanceof Fridge
                     && 9000 == ((Fridge) dataModel).getWeight()
                     && "TomatosMuchachos".equals(dataModel.get(Attribute.BRAND))) {
-                isOk2 = true;
+                isFridgeSaved = true;
             }
         }
-        Assert.assertTrue(isOk1);
-        Assert.assertTrue(isOk2);
+        Assert.assertTrue(isDogSaved);
+        Assert.assertTrue(isFridgeSaved);
     }
 }
