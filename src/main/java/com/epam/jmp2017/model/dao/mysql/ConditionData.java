@@ -1,7 +1,5 @@
 package com.epam.jmp2017.model.dao.mysql;
 
-import com.epam.jmp2017.model.json.ConditionModel;
-
 import java.util.List;
 
 public class ConditionData {
@@ -12,7 +10,7 @@ public class ConditionData {
     private String attribute;
     private String value;
     private String className;
-    private List<ConditionModel> conditions;
+    private List<ConditionData> conditions;
 
     public int getId() {
         return id;
@@ -70,11 +68,11 @@ public class ConditionData {
         this.className = className;
     }
 
-    public List<ConditionModel> getConditions() {
+    public List<ConditionData> getConditions() {
         return conditions;
     }
 
-    public void setConditions(List<ConditionModel> conditions) {
+    public void setConditions(List<ConditionData> conditions) {
         this.conditions = conditions;
     }
 
@@ -89,7 +87,7 @@ public class ConditionData {
             String attribute,
             String value,
             String className,
-            List<ConditionModel> conditions) {
+            List<ConditionData> conditions) {
         this.id = id;
         this.actionId = actionId;
         this.parentId = parentId;
