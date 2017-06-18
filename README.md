@@ -11,7 +11,7 @@
 7. **_Infrastructure: Continuous Integration Concepts (Jenkins)_**
 8. **_Backend: Spring MVC_**
 9. **_Infrastructure: Unit testing_**
-10. Lambdas & Streams (Java 8)
+10. **_Lambdas & Streams (Java 8)_**
 11. Backend: Multithreading: Classic Model and Concurrency
 12. Backend: Memory Management and Garbage Collection
 13. Backend: NoSQL (Mongo, Cassandra)
