@@ -14,6 +14,8 @@ import com.epam.jmp2017.model.dao.IDataDao;
 import com.epam.jmp2017.model.json.DataModel;
 import com.epam.jmp2017.util.workers.Worker;
 
+import javax.ws.rs.Consumes;
+
 @RestController
 @RequestMapping(value = WebConstants.URL_ACTIONS)
 public class ActionsController {
@@ -35,6 +37,14 @@ public class ActionsController {
     public List<ActionModel> doGet(@RequestParam(BaseConstants.ATTR_DATA) String data) {
         return process(data);
     }
+    
+    @PostMapping
+    @RequestMapping("/post")
+    @Consumes("text/plain")
+    public List<ActionModel> processData(@RequestBody String data) {
+    	return process(data);
+    }
+
 
     //DRY
     private List<ActionModel> process(String data) {
