@@ -50,7 +50,7 @@ public class DataDaoMongo implements IDataDao {
             }
         }
 
-        return false;
+        return true;
     }
 
     private void addFromDBTable(List<DataModel> data, MongoDatabase db, String table) {
