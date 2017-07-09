@@ -18,16 +18,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class Worker {
     @Autowired
-    private IActionDao actionDaoDb;
+    private IActionDao actionDaoMongo;
 
     @Autowired
-    private IDataDao dataDaoDb;
+    private IDataDao dataDaoMongo;
 
     public List<ResultModel> getTaskResult(String dataString) {
-        List<DataModel> dataList = dataDaoDb.fromJson(dataString);
+        List<DataModel> dataList = dataDaoMongo.fromJson(dataString);
         sortDataByTypeCode(dataList);
-        dataDaoDb.save(dataList);
-        List<ActionModel> actions = actionDaoDb.getAllActions();
+        dataDaoMongo.save(dataList);
+        List<ActionModel> actions = actionDaoMongo.getAllActions();
         return getActionsResults(dataList, actions);
     }
 

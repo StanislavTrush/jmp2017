@@ -3,7 +3,6 @@ package com.epam.jmp2017.controller;
 import java.util.List;
 
 import com.epam.jmp2017.model.json.ActionModel;
-import com.epam.jmp2017.model.json.impl.data.Dog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +22,10 @@ public class ActionsController {
     private Worker worker;
 
     @Autowired
-    private IDataDao dataDaoDb;
+    private IDataDao dataDaoMongo;
 
     @Autowired
-    private IActionDao actionDaoDb;
+    private IActionDao actionDaoMongo;
 
     @PostMapping
     public List<ActionModel> doPost(@RequestParam(BaseConstants.ATTR_DATA) String data) {
@@ -48,9 +47,9 @@ public class ActionsController {
 
     //DRY
     private List<ActionModel> process(String data) {
-        List<DataModel> dataList = dataDaoDb.fromJson(data);
+        List<DataModel> dataList = dataDaoMongo.fromJson(data);
         worker.sortDataByTypeCode(dataList);
 
-        return actionDaoDb.getAvailableActions(dataList, actionDaoDb.getAllActions());
+        return actionDaoMongo.getAvailableActions(dataList, actionDaoMongo.getAllActions());
     }
 }

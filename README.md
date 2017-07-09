@@ -13,5 +13,5 @@
 9. **_Infrastructure: Unit testing_**
 10. **_Lambdas & Streams (Java 8)_**
 11. **_Backend: Multithreading: Classic Model and Concurrency_**
-12. Backend: Memory Management and Garbage Collection
-13. Backend: NoSQL (Mongo, Cassandra)
+12. **_Backend: Memory Management and Garbage Collection_**
+13. **_Backend: NoSQL (Mongo, Cassandra)_**
